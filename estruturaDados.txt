@@ -1,0 +1,42 @@
+
+[
+	MDIO:{
+			aluno: a76507,
+			origem: "TP1",
+			destino: "TP2",
+			data: "01/03/2018-18:55:12",
+		},
+		{
+			aluno: a76441,
+			origem: "TP2",
+			destino: "TP3",
+			data: "02/03/2018-14:23:35",
+		},
+		{
+			aluno: a76745,
+			origem: "TP3",
+			destino: "TP1",
+			data: "03/03/2018-11:23:10",
+		}
+	},
+	CP:{
+			aluno: a76507,
+			origem: "TP1",
+			destino: "TP2",
+			data: "01/03/2018-18:55:12",
+		},
+		{
+			aluno: a76441,
+			origem: "TP2",
+			destino: "TP3",
+			data: "02/03/2018-14:23:35",
+		},
+		{
+			aluno: a76745,
+			origem: "TP3",
+			destino: "TP2",
+			data: "02/03/2018-14:23:35",
+		}
+	},
+	
+]
