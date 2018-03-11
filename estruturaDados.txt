@@ -1,42 +1,47 @@
-
-[
-	MDIO:{
-			aluno: a76507,
-			origem: "TP1",
-			destino: "TP2",
-			data: "01/03/2018-18:55:12",
+{
+	"mdio":[
+		{   "aluno": "a76507",
+			"origem": "TP1",
+			"destino": "TP2",
+			"data": 1519922466000
 		},
 		{
-			aluno: a76441,
-			origem: "TP2",
-			destino: "TP3",
-			data: "02/03/2018-14:23:35",
+			"aluno": "a76441",
+			"origem": "TP2",
+			"destino": "TP3",
+			"data": 1519922468000
 		},
 		{
-			aluno: a76745,
-			origem: "TP3",
-			destino: "TP1",
-			data: "03/03/2018-11:23:10",
+			"aluno": "a76745",
+			"origem": "TP3",
+			"destino": "TP1",
+			"data": 1519932466000
+		},
+		{
+			"aluno": "a76745",
+			"origem": "TP1",
+			"destino": "TP3",
+			"data": 1566666666000
 		}
-	},
-	CP:{
-			aluno: a76507,
-			origem: "TP1",
-			destino: "TP2",
-			data: "01/03/2018-18:55:12",
+	],
+	"cp":[
+		{
+			"aluno": "a76507",
+			"origem": "TP1",
+			"destino": "TP2",
+			"data": 1519922466500
 		},
 		{
-			aluno: a76441,
-			origem: "TP2",
-			destino: "TP3",
-			data: "02/03/2018-14:23:35",
+			"aluno": "a76441",
+			"origem": "TP2",
+			"destino": "TP3",
+			"data": 1519922426000
 		},
 		{
-			aluno: a76745,
-			origem: "TP3",
-			destino: "TP2",
-			data: "02/03/2018-14:23:35",
+			"aluno": "a76745",
+			"origem": "TP3",
+			"destino": "TP2",
+			"data": 1519926466000
 		}
-	},
-	
-]
+	]
+}

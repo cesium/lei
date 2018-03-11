@@ -1,0 +1,4 @@
+NetworkX (http://networkx.github.io/)
+igraph (http://igraph.org/)
+
+https://github.com/pmatiello/python-graph
