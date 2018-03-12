@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"><key attr.name="weight" attr.type="long" for="edge" id="d0"/>
+<graph edgedefault="directed"><node id="TP1"/>
+<node id="TP2"/>
+<node id="TP3"/>
+<edge source="TP1" target="TP2">
+  <data key="d0">1519922466500</data>
+</edge>
+<edge source="TP2" target="TP3">
+  <data key="d0">1519922426000</data>
+</edge>
+<edge source="TP3" target="TP2">
+  <data key="d0">1519926466000</data>
+</edge>
+</graph></graphml>
