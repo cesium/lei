@@ -15,7 +15,7 @@ public class LPretencoes {
     ArrayList<Pretencao> pretencoes;
 
     public LPretencoes() {
-    pretencoes = new ArrayList<Pretencao>();
+        pretencoes = new ArrayList<Pretencao>();
     }
     
    

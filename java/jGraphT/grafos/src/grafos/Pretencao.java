@@ -10,12 +10,12 @@ package grafos;
  * @author Bruno
  */
 public class Pretencao {
-    Long data;
+    int data;
     String origem;
     String destino;
     String nMecanografico;
     
-    public Pretencao(Long data, String origem, String destino,String nMecanografico){
+    public Pretencao(int data, String origem, String destino,String nMecanografico){
         this.data=data;
         this.origem=origem;
         this.destino=destino;
@@ -25,7 +25,7 @@ public class Pretencao {
     /*GET's*/
     String getOrigem(){return this.origem;}
     String getDestino(){return this.destino;}
-    Long getData(){return this.data;}
+    int getData(){return this.data;}
     String getMecanografico(){return this.nMecanografico;}
     
    /* Boolean equals(Pretencao a, Pretencao b){
@@ -36,7 +36,7 @@ public class Pretencao {
     
     void setOrigem(String origem){this.origem=origem;}
     void setDestion(String destino){this.destino=destino;}
-    void setData(Long data){this.data=data;}
+    void setData(int data){this.data=data;}
     void setMecanografico(String mecanografico){this.nMecanografico=mecanografico;}
     
 }

@@ -3,156 +3,156 @@
 		{   "aluno": "a1",
 			"origem": "TP1",
 			"destino": "TP2",
-			"data": 1000000000000
+			"data": 1
 		},
 		{
 			"aluno": "a2",
 			"origem": "TP2",
 			"destino": "TP3",
-			"data": 2000000000000
+			"data": 2
 		},
 		{
 			"aluno": "a3",
 			"origem": "TP3",
 			"destino": "TP1",
-			"data": 3000000000000
+			"data": 3
 		},
 		{   "aluno": "a4",
 			"origem": "TP1",
 			"destino": "TP4",
-			"data": 4000000000000
+			"data": 4
 		},
 		{
 			"aluno": "a5",
 			"origem": "TP2",
 			"destino": "TP3",
-			"data": 5000000000000
+			"data": 5
 		},
 		{
 			"aluno": "a6",
 			"origem": "TP3",
 			"destino": "TP1",
-			"data": 6000000000000
+			"data": 6
 		},
 		{   "aluno": "a7",
 			"origem": "TP4",
 			"destino": "TP2",
-			"data": 7000000000000
+			"data": 7
 		},
 		{
 			"aluno": "a8",
 			"origem": "TP2",
 			"destino": "TP3",
-			"data": 8000000000000
+			"data": 8
 		},
 		{
 			"aluno": "a9",
 			"origem": "TP3",
 			"destino": "TP5",
-			"data": 9000000000000
+			"data": 9
 		},
 		{   "aluno": "a10",
 			"origem": "TP1",
 			"destino": "TP2",
-			"data": 10000000000000
+			"data": 1
 		},
 		{
 			"aluno": "a11",
 			"origem": "TP5",
 			"destino": "TP4",
-			"data": 11000000000000
+			"data": 11
 		},
 		{
 			"aluno": "a12",
 			"origem": "TP5",
 			"destino": "TP1",
-			"data": 12000000000000
+			"data": 12
 		},
 		{
 			"aluno": "a13",
 			"origem": "TP1",
 			"destino": "TP3",
-			"data": 13000000000000
+			"data": 13
 		},
 		{
 			"aluno": "a14",
 			"origem": "TP4",
 			"destino": "TP1",
-			"data": 14000000000000
+			"data": 14
 		},
 		{   "aluno": "a15",
 			"origem": "TP6",
 			"destino": "TP7",
-			"data": 15000000000000
+			"data": 15
 		},
 		{
 			"aluno": "a16",
 			"origem": "TP2",
 			"destino": "TP8",
-			"data": 16000000000000
+			"data": 16
 		},
 		{
 			"aluno": "a17",
 			"origem": "TP8",
 			"destino": "TP5",
-			"data": 17000000000000
+			"data": 17
 		},
 		{   "aluno": "a18",
 			"origem": "TP1",
 			"destino": "TP7",
-			"data": 18000000000000
+			"data": 18
 		},
 		{
 			"aluno": "a19",
 			"origem": "TP2",
 			"destino": "TP7",
-			"data": 19000000000000
+			"data": 19
 		},
 		{
 			"aluno": "a20",
 			"origem": "TP6",
 			"destino": "TP7",
-			"data": 20000000000000
+			"data": 2
 		},
 		{   "aluno": "a21",
 			"origem": "TP7",
 			"destino": "TP4",
-			"data": 21000000000000
+			"data": 21
 		},
 		{
 			"aluno": "a22",
 			"origem": "TP2",
 			"destino": "TP8",
-			"data": 22000000000000
+			"data": 22
 		},
 		{
 			"aluno": "a23",
 			"origem": "TP8",
 			"destino": "TP5",
-			"data": 23000000000000
+			"data": 23
 		},
 		{   "aluno": "a24",
 			"origem": "TP7",
 			"destino": "TP8",
-			"data": 24000000000000
+			"data": 24
 		},
 		{
 			"aluno": "a25",
 			"origem": "TP5",
 			"destino": "TP6",
-			"data": 25000000000000
+			"data": 25
 		},
 		{
 			"aluno": "a26",
 			"origem": "TP5",
 			"destino": "TP1",
-			"data": 26000000000000
+			"data": 26
 		},
 		{
 			"aluno": "a27",
 			"origem": "TP8",
 			"destino": "TP3",
-			"data": 27000000000000
+			"data": 27
 		}
 	],
 	"cp":[
@@ -160,31 +160,31 @@
 			"aluno": "a76507",
 			"origem": "TP1",
 			"destino": "TP2",
-			"data": 1519922466500
+			"data": 1
 		},
 		{
 			"aluno": "a76441",
 			"origem": "TP2",
 			"destino": "TP3",
-			"data": 1519922426000
+			"data": 2
 		},
 		{
 			"aluno": "a76",
 			"origem": "TP2",
 			"destino": "TP3",
-			"data": 1000000000000
+			"data": 3
 		},
 		{
 			"aluno": "a736",
 			"origem": "TP3",
 			"destino": "TP2",
-			"data": 1000000000000
+			"data": 4
 		},
 		{
 			"aluno": "a76745",
 			"origem": "TP3",
 			"destino": "TP2",
-			"data": 1519926466000
+			"data": 5
 		}
 	],
 	"pf":[
@@ -192,31 +192,31 @@
 			"aluno": "a1",
 			"origem": "TP1",
 			"destino": "TP2",
-			"data": 1000000000000
+			"data": 1
 		},
 		{
 			"aluno": "a2",
 			"origem": "TP2",
 			"destino": "TP3",
-			"data": 2000000000000
+			"data": 2
 		},
 		{
 			"aluno": "a3",
 			"origem": "TP4",
 			"destino": "TP3",
-			"data": 3000000000000
+			"data": 0
 		},
 		{
 			"aluno": "a4",
 			"origem": "TP1",
 			"destino": "TP4",
-			"data": 4000000000000
+			"data": 4
 		},
 		{
 			"aluno": "a5",
 			"origem": "TP3",
 			"destino": "TP1",
-			"data": 5000000000000
+			"data": 5
 		}
 	]
 }
