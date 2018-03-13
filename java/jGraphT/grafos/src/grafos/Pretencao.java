@@ -10,21 +10,23 @@ package grafos;
  * @author Bruno
  */
 public class Pretencao {
-    Number data;
+    Long data;
     String origem;
     String destino;
+    String nMecanografico;
     
-    
-    public Pretencao(Number data, String origem, String destino){
+    public Pretencao(Long data, String origem, String destino,String nMecanografico){
         this.data=data;
         this.origem=origem;
         this.destino=destino;
+        this.nMecanografico=nMecanografico;
     }
     
     /*GET's*/
     String getOrigem(){return this.origem;}
     String getDestino(){return this.destino;}
-    Number getData(){return this.data;}
+    Long getData(){return this.data;}
+    String getMecanografico(){return this.nMecanografico;}
     
    /* Boolean equals(Pretencao a, Pretencao b){
        return (a.data == b.data && a.destino==b.destino &&  a.origem==b.origem); 
@@ -34,6 +36,7 @@ public class Pretencao {
     
     void setOrigem(String origem){this.origem=origem;}
     void setDestion(String destino){this.destino=destino;}
-    void setData(Number data){this.data=data;}
+    void setData(Long data){this.data=data;}
+    void setMecanografico(String mecanografico){this.nMecanografico=mecanografico;}
     
 }
