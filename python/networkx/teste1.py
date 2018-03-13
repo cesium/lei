@@ -36,59 +36,73 @@ for disciplina in json_data:
     for aresta in lista_arestas:
         grafo.add_edge(aresta[0],aresta[1],weight=min(aresta[2]))
     # DESENHAR O GRAFO
-    '''
+    
     pos=nx.spring_layout(grafo,scale=2,k=0.2,iterations=10)
     nx.draw(grafo,pos,with_labels=True)
     labels = nx.get_edge_attributes(grafo,'weight')
     nx.draw_networkx_edge_labels(grafo,pos,edge_labels=labels,font_size=5,rotate=False)
-    plt.show()'''
+    plt.show()
 
-    #ENCONTRAR CICLOS
+    #ENCONTRAR TODOS CICLOS
     lista_ciclos = list(nx.simple_cycles(grafo))
+    print("Todos os ciclos encontrados:")
+    pprint(lista_ciclos)
+    print("\n\n")
     if len(lista_ciclos) > 0 :
         maior_ciclo = max(list(map(len,lista_ciclos)))
+        # SELECIONAR APENAS OS CICLOS DE MAIOR TAMANHO
         lista_ciclos = list(filter(lambda x : len(x) == maior_ciclo , lista_ciclos))
+        print("Todos os maiores ciclos:")
+        pprint(lista_ciclos)
+        print("\n\n")
         existe_empate = len(lista_ciclos) > 1
+        ciclo_a_resolver = []
         if existe_empate:
+            # ENCONTRAR CICLO A SER RESOLVIDO
+            (min_data, min_ciclo) = (sys.maxsize,[])
             for ciclo in lista_ciclos:
                 ciclo.append(ciclo[0])
-                pass
+                min_data_ciclo = sys.maxsize
+                for nodo in ciclo[:-1]:
+                    data_aresta = grafo[nodo][ciclo[ciclo.index(nodo)+1]]["weight"]
+                    if data_aresta < min_data_ciclo:
+                        min_data_ciclo = data_aresta
+                if min_data_ciclo < min_data:
+                    (min_data , min_ciclo) = (min_data_ciclo,ciclo)
+            ciclo_a_resolver = min_ciclo
         else:
-            ciclo = lista_ciclos[0]
-            
-            ciclo.append(ciclo[0])
-            print(ciclo)
-            print("ANTES:")
-            pprint(uc)
-            for nodo in ciclo[:-1]:
+            ciclo_a_resolver = lista_ciclos[0]
+            ciclo_a_resolver.append(ciclo_a_resolver[0])
+        print("Ciclo a resolver:")
+        pprint(ciclo_a_resolver)
+        print("\n\n")
+        for nodo in ciclo_a_resolver[:-1]:
+               
+            (aluno,data) = ("",sys.maxsize)
+            for troca in uc:
+                aluno_troca = troca["aluno"]
                 
-                (aluno,data) = ("",sys.maxsize)
-                for troca in uc:
-                    aluno_troca = troca["aluno"]
-                    
-                    origem = troca["origem"]
-                    destino = troca["destino"]
-                    data_troca = troca["data"]
-                    '''print("aluno: " + str(aluno) )
-                    print("aluno_troca: " + str(aluno_troca) )
-                    print("data: " + str(data) )
-                    print("data_troca: " + str(data_troca) )'''
-                    
-                    if origem == nodo and destino == ciclo[ciclo.index(nodo)+1]:
-                        print("EXISTE ARESTA")
-                        if data_troca < data:
-                            print("DATA MENOR")
-                            (aluno,data) = (aluno_troca,data_troca)
+                origem = troca["origem"]
+                destino = troca["destino"]
+                data_troca = troca["data"]
+                '''print("aluno: " + str(aluno) )
+                print("aluno_troca: " + str(aluno_troca) )
+                print("data: " + str(data) )
+                print("data_troca: " + str(data_troca) )'''
                 
-                uc.remove(list(filter(lambda x : x["aluno"] == aluno,uc))[0])
+                if origem == nodo and destino == ciclo_a_resolver[ciclo_a_resolver.index(nodo)+1]:
+                    if data_troca < data:
+                        (aluno,data) = (aluno_troca,data_troca)
+            aluno_a_remover = list(filter(lambda x : x["aluno"] == aluno,uc))[0]
+            print(aluno_a_remover)
+            uc.remove(aluno_a_remover)
             
-            print("DEPOIS:")
-            pprint(uc)
-
+            
+'''
 print("ANTES")
 pprint(antes)
 print("DEPOIS")
 pprint(json_data)
-    
+'''
     
 
