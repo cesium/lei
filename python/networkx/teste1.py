@@ -15,8 +15,8 @@ for disciplina in json_data:
     lista_turnos = []
     lista_arestas = []
     for troca in uc:
-        origem = troca["origem"]
-        destino = troca["destino"]
+        origem = troca["from_shift_id"]
+        destino = troca["to_shift_id"]
         if origem not in lista_turnos:
             lista_turnos.append(origem)
         if destino not in lista_turnos:
@@ -24,25 +24,25 @@ for disciplina in json_data:
         existe_aresta = False
         for aresta in lista_arestas:
             if aresta[0] == origem and aresta[1] == destino:
-                aresta[2].append(troca["data"])
+                aresta[2].append(troca["created_at"])
                 aresta[2].sort()
                 existe_aresta = True
                 break
         if not existe_aresta:
-            lista_arestas.append((origem,destino,[troca["data"]]))
+            lista_arestas.append((origem,destino,[troca["created_at"]]))
     # CONTRUIR O GRAFO
     grafo = nx.DiGraph()
     grafo.add_nodes_from(lista_turnos)
     for aresta in lista_arestas:
         grafo.add_edge(aresta[0],aresta[1],weight=min(aresta[2]))
     # DESENHAR O GRAFO
-    
+    '''
     pos=nx.spring_layout(grafo,scale=2,k=0.2,iterations=10)
     nx.draw(grafo,pos,with_labels=True)
     labels = nx.get_edge_attributes(grafo,'weight')
     nx.draw_networkx_edge_labels(grafo,pos,edge_labels=labels,font_size=5,rotate=False)
     plt.show()
-
+    '''
     #ENCONTRAR TODOS CICLOS
     lista_ciclos = list(nx.simple_cycles(grafo))
     print("Todos os ciclos encontrados:")
@@ -78,24 +78,19 @@ for disciplina in json_data:
         print("\n\n")
         for nodo in ciclo_a_resolver[:-1]:
                
-            (aluno,data) = ("",sys.maxsize)
-            for troca in uc:
-                aluno_troca = troca["aluno"]
+            (idTroca,data) = ("",sys.maxsize)
+            for pedidoTroca in uc:
+                troca = pedidoTroca["id"]
                 
-                origem = troca["origem"]
-                destino = troca["destino"]
-                data_troca = troca["data"]
-                '''print("aluno: " + str(aluno) )
-                print("aluno_troca: " + str(aluno_troca) )
-                print("data: " + str(data) )
-                print("data_troca: " + str(data_troca) )'''
-                
+                origem = pedidoTroca["from_shift_id"]
+                destino = pedidoTroca["to_shift_id"]
+                data_troca = pedidoTroca["created_at"]                
                 if origem == nodo and destino == ciclo_a_resolver[ciclo_a_resolver.index(nodo)+1]:
                     if data_troca < data:
-                        (aluno,data) = (aluno_troca,data_troca)
-            aluno_a_remover = list(filter(lambda x : x["aluno"] == aluno,uc))[0]
-            print(aluno_a_remover)
-            uc.remove(aluno_a_remover)
+                        (idTroca,data) = (troca,data_troca)
+            troca_a_remover = list(filter(lambda x : x["id"] == idTroca,uc))[0]
+            print(troca_a_remover)
+            uc.remove(troca_a_remover)
             
             
 '''

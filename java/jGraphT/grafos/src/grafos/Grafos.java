@@ -42,15 +42,15 @@ public class Grafos {
             ArrayList<String> turnos = new ArrayList<>();
             ArrayList<Pretencao> arestas = new ArrayList<>();
             String uc = keys.getString (i); // tenho a key//
-            System.out.println(uc);
-            JSONArray alunos = obj.getJSONArray(uc);
-            for(int j=0;j<alunos.length();j++){ //iterar sobre as pretencoes dos alunos do turno // 
-                JSONObject aluno = alunos.getJSONObject(j); 
-                String turnoO=aluno.get("origem").toString();
-                String turnoD=aluno.get("destino").toString();
-                String mecanografico=aluno.get("aluno").toString();
-                Integer data=(Integer) aluno.get("data");
-                Pretencao p= new Pretencao(data, turnoO,turnoD,mecanografico);
+            //System.out.println(uc);
+            JSONArray trocas = obj.getJSONArray(uc);
+            for(int j=0;j<trocas.length();j++){ //iterar sobre as pretencoes de troca do turno // 
+                JSONObject troca = trocas.getJSONObject(j); 
+                String turnoO=troca.get("from_shift_id").toString();
+                String turnoD=troca.get("to_shift_id").toString();
+                String idTroca=troca.get("id").toString();
+                Integer data=(Integer) troca.get("created_at");
+                Pretencao p= new Pretencao(data, turnoO,turnoD,idTroca);
 
                 if(!turnos.contains(turnoO)){
                     turnos.add(turnoO);
@@ -68,14 +68,14 @@ public class Grafos {
                 graph.addVertex(turno);
             }
             for(Pretencao aresta: arestas){
-                LPretencoes Lpreten=graph.getEdge(aresta.getOrigem(),aresta.getDestino());
+                LPretencoes Lpreten=graph.getEdge(aresta.getFrom_shift_id(),aresta.getTo_shift_id());
                 if(Lpreten!=null){
-                    graph.getEdge(aresta.getOrigem(),aresta.getDestino()).pretencoes.add(aresta);
+                    graph.getEdge(aresta.getFrom_shift_id(),aresta.getTo_shift_id()).pretencoes.add(aresta);
                 }
                 else{
                     LPretencoes novaLp= new LPretencoes();
                     novaLp.pretencoes.add(aresta);
-                    graph.addEdge(aresta.getOrigem(),aresta.getDestino(),novaLp);
+                    graph.addEdge(aresta.getFrom_shift_id(),aresta.getTo_shift_id(),novaLp);
                 }     
             }     
             TarjanSimpleCycles tsc;
@@ -89,7 +89,7 @@ public class Grafos {
             //Existem ciclos no grafo
                 int longest=listaCiclos.stream().mapToInt(List::size).max().orElse(-1);
                 List<List<String>> maiorCiclos= listaCiclos.stream().filter(x->x.size()==longest).collect(toList());
-                System.out.println("Maior ciclo:"+maiorCiclos.toString());
+                //System.out.println("Maior ciclo:"+maiorCiclos.toString());
                 List<String> ciclo_A_resolver= new ArrayList<>();
 
                 if(maiorCiclos.size()>1){
@@ -103,9 +103,9 @@ public class Grafos {
                         for(int k=0;k<ciclo.size()-1;++k){
                             LPretencoes lpc = graph.getEdge(ciclo.get(k),ciclo.get(k+1));
                             Comparator <Pretencao> comparator; 
-                            comparator= (p1,p2)->Integer.compare(p1.getData(),p2.getData());
+                            comparator= (p1,p2)->Integer.compare(p1.getCreated_at(),p2.getCreated_at());
                             Pretencao pc=lpc.pretencoes.stream().min(comparator).get();
-                            int minDataAresta= pc.getData();
+                            int minDataAresta= pc.getCreated_at();
                             if(minDataAresta < minDataCiclo){
                                 minDataCiclo = minDataAresta;
                             }
@@ -117,27 +117,21 @@ public class Grafos {
                             ciclo_A_resolver=ciclo;
                         }
                     }
-                    System.out.println("--------Trocas na uc:" +uc+ "----");
-                    for(int k=0;k<ciclo_A_resolver.size()-1;++k){
-                        LPretencoes pAr=graph.getEdge(ciclo_A_resolver.get(k),ciclo_A_resolver.get(k+1));
-                        Comparator <Pretencao> comparator; 
-                        comparator= (p1,p2)->Integer.compare(p1.getData(),p2.getData());
-                        Pretencao pc=pAr.pretencoes.stream().min(comparator).get();
-                        System.out.println("{aluno:"+pc.getMecanografico()+" ,data: "+pc.getData()+ " ,origem:" +pc.getOrigem()+" ,destino:"+pc.getDestino()+" }");
-                    }
                 }
                 else{
-                    System.out.println("--------Trocas na uc:" +uc+ "----");
                     ciclo_A_resolver=maiorCiclos.get(0);
                     ciclo_A_resolver.add(ciclo_A_resolver.get(0));
-                    for(int k=0;k<ciclo_A_resolver.size()-1;++k){
-                        LPretencoes pAr=graph.getEdge(ciclo_A_resolver.get(k),ciclo_A_resolver.get(k+1));
-                        Comparator <Pretencao> comparator; 
-                        comparator= (p1,p2)->Integer.compare(p1.getData(),p2.getData());
-                        Pretencao pc=pAr.pretencoes.stream().min(comparator).get();
-                        System.out.println("{aluno:"+pc.getMecanografico()+" ,data: "+pc.getData()+ " ,origem:" +pc.getOrigem()+" ,destino:"+pc.getDestino()+" }");
-                    }
                 }
+                System.out.println("--------Trocas na uc:" +uc+ "----");
+                for(int k=0;k<ciclo_A_resolver.size()-1;++k){
+                    LPretencoes pAr=graph.getEdge(ciclo_A_resolver.get(k),ciclo_A_resolver.get(k+1));
+                    Comparator <Pretencao> comparator; 
+                    comparator= (p1,p2)->Integer.compare(p1.getCreated_at(),p2.getCreated_at());
+                    Pretencao pc=pAr.pretencoes.stream().min(comparator).get();
+                    System.out.println(pc.getId());
+                    System.out.println("\tcreated_at: "+pc.getCreated_at()+ "\n\tfrom_shift_id:" +pc.getFrom_shift_id()+"\n\tto_shift_id:"+pc.getTo_shift_id());
+                }
+                
             }
             else{
             //Não existem ciclos no grafo 
