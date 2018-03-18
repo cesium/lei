@@ -4,9 +4,12 @@ package grafos;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import org.jgrapht.alg.cycle.TarjanSimpleCycles;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
@@ -25,7 +28,7 @@ public class Grafos {
     public static void main(String[] args) throws JSONException, FileNotFoundException {
            
         /* Ler e guardar ficheiro JSON num objeto JSON */
-        Scanner s= new Scanner(new FileReader("../../../estruturaDados.txt"));
+        Scanner s= new Scanner(new FileReader("../../../estruturaDados_v2.txt"));
         StringBuilder sb = new StringBuilder();
 
         while(s.hasNext()){
@@ -88,39 +91,51 @@ public class Grafos {
             if(listaCiclos.size()>0){
             //Existem ciclos no grafo
                 int longest=listaCiclos.stream().mapToInt(List::size).max().orElse(-1);
-                List<List<String>> maiorCiclos= listaCiclos.stream().filter(x->x.size()==longest).collect(toList());
-                //System.out.println("Maior ciclo:"+maiorCiclos.toString());
+                List<List<String>> maioresCiclos= listaCiclos.stream().filter(x->x.size()==longest).collect(toList());
+                
+                System.out.println("Maiores ciclos:"+maioresCiclos.toString());
+                
+                for(List<String> ciclo : maioresCiclos){
+                    ciclo.add(ciclo.get(0));
+                }
+                
                 List<String> ciclo_A_resolver= new ArrayList<>();
 
-                if(maiorCiclos.size()>1){
-                 //Há Empate//   
-                    Integer minData=Integer.MAX_VALUE;
-                    for(List<String> ciclo: maiorCiclos){
-                        ciclo.add(ciclo.get(0));
-                        Integer minDataCiclo=Integer.MAX_VALUE;
-                        
-                        
-                        for(int k=0;k<ciclo.size()-1;++k){
-                            LPretencoes lpc = graph.getEdge(ciclo.get(k),ciclo.get(k+1));
-                            Comparator <Pretencao> comparator; 
-                            comparator= (p1,p2)->Integer.compare(p1.getCreated_at(),p2.getCreated_at());
-                            Pretencao pc=lpc.pretencoes.stream().min(comparator).get();
-                            int minDataAresta= pc.getCreated_at();
-                            if(minDataAresta < minDataCiclo){
-                                minDataCiclo = minDataAresta;
+                if(maioresCiclos.size()>1){
+                 //Há Empate//
+                    int minData =0;
+                    HashMap<Integer,List<List<String>>> minDataCiclos = new HashMap<>();
+                    boolean desempatado = false;
+                    int maxIters = graph.vertexSet().size() -1;
+                    int iter = 0;
+                    do{
+                        minDataCiclos = new HashMap<>();
+                        for(List<String> ciclo: maioresCiclos){
+                            int minDataCiclo=getMinDataCiclo(graph,ciclo,minData);
+                            if(minDataCiclos.containsKey(minDataCiclo)){
+                                minDataCiclos.get(minDataCiclo).add(ciclo);
                             }
-                            //System.out.println("pedido mais antigo do "+k+"º ciclo :"+minCiclo);
+                            else{
+                                List<List<String>> listaDeCiclos = new ArrayList<>();
+                                listaDeCiclos.add(ciclo);
+                                minDataCiclos.put(minDataCiclo, listaDeCiclos);
+                            }
                         }
-                        
-                        if(minDataCiclo<minData){
-                            minData=minDataCiclo;
-                            ciclo_A_resolver=ciclo;
+                        minData = Collections.min(minDataCiclos.keySet());
+                        //System.out.println(minDataCiclos);
+                        //new Scanner(System.in).next();
+                        desempatado = minDataCiclos.get(minData).size() == 1;
+                        if(!desempatado){
+                            maioresCiclos = minDataCiclos.get(minData);
                         }
                     }
+                    while(!desempatado && (++iter != maxIters));
+                    if(iter == maxIters) System.out.println("\nmaxIters atingido!!!\n");
+                    ciclo_A_resolver = minDataCiclos.get(minData).get(0);
+                    
                 }
                 else{
-                    ciclo_A_resolver=maiorCiclos.get(0);
-                    ciclo_A_resolver.add(ciclo_A_resolver.get(0));
+                    ciclo_A_resolver = maioresCiclos.get(0);
                 }
                 System.out.println("--------Trocas na uc:" +uc+ "----");
                 for(int k=0;k<ciclo_A_resolver.size()-1;++k){
@@ -140,4 +155,39 @@ public class Grafos {
         }
            
     }
+
+    private static int getMinDataCiclo(DefaultDirectedWeightedGraph<String, LPretencoes> graph, List<String> ciclo,int minData) {
+        int minDataCiclo = Integer.MAX_VALUE;
+        for(int k=0;k<ciclo.size()-1;++k){
+            LPretencoes lpc = graph.getEdge(ciclo.get(k),ciclo.get(k+1));
+            Comparator <Pretencao> comparator = (p1,p2)->Integer.compare(p1.getCreated_at(),p2.getCreated_at());
+            List<Pretencao> pc=lpc.pretencoes.stream().sorted(comparator).collect(Collectors.toList());
+            int minDataAresta = Integer.MAX_VALUE;
+            boolean naoConta = false;
+            for(int i=0; i<pc.size() ; i++){
+                int dataAresta = pc.get(i).getCreated_at();
+                if(dataAresta <= minData){
+                    naoConta=true;
+                    break;
+                }
+                if(dataAresta > minData &&
+                   dataAresta < minDataAresta ){
+                    minDataAresta = dataAresta;
+                }
+            }
+            if(!naoConta && minDataAresta < minDataCiclo){
+                minDataCiclo = minDataAresta;
+            }
+            
+        }
+        if(minDataCiclo == Integer.MAX_VALUE){
+            System.out.println("ESTE CICLO NAO TEM NENHUMA ARESTA COM MENOR PESO!!!");
+            return minData;
+        }
+        return minDataCiclo;
+    }
+
+    
+    
+    
 }

@@ -18,5 +18,12 @@ public class LPretencoes {
         pretencoes = new ArrayList<Pretencao>();
     }
     
-   
+   public String toString(){
+       String ret="[";
+       for(Pretencao p : pretencoes){
+           ret += p.toString();
+       }
+       ret+="]";
+       return ret;
+   }
 }

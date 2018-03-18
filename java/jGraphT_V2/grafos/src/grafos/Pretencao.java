@@ -39,4 +39,11 @@ public class Pretencao {
     void setCreated_at(int data){this.created_at=created_at;}
     void setId(String mecanografico){this.id=id;}
     
+    public String toString(){
+        return "{from: " + this.from_shift_id +
+               ", to: " + this.to_shift_id + 
+               ", created_at: " + this.created_at +
+               ", id: " + this.id + "}";
+    }
+    
 }
