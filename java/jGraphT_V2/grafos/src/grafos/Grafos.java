@@ -92,7 +92,7 @@ public class Grafos {
             //Existem ciclos no grafo
                 int longest=listaCiclos.stream().mapToInt(List::size).max().orElse(-1);
                 List<List<String>> maioresCiclos= listaCiclos.stream().filter(x->x.size()==longest).collect(toList());
-                
+                System.out.println("--------Trocas na uc:" +uc+ "----");
                 System.out.println("Maiores ciclos:"+maioresCiclos.toString());
                 
                 for(List<String> ciclo : maioresCiclos){
@@ -137,7 +137,7 @@ public class Grafos {
                 else{
                     ciclo_A_resolver = maioresCiclos.get(0);
                 }
-                System.out.println("--------Trocas na uc:" +uc+ "----");
+                
                 for(int k=0;k<ciclo_A_resolver.size()-1;++k){
                     LPretencoes pAr=graph.getEdge(ciclo_A_resolver.get(k),ciclo_A_resolver.get(k+1));
                     Comparator <Pretencao> comparator; 

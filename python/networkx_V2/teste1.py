@@ -89,8 +89,8 @@ for disciplina in json_data:
                         ciclosComTamanhoX.append(ciclo)
                     else:
                         minDataCiclos[minDataCiclo]=[ciclo]
-                pprint(minDataCiclos)
-                input()
+                #pprint(minDataCiclos)
+                #input()
                 minData = min(minDataCiclos.keys())
                 desempatado = len(minDataCiclos[minData]) == 1
                 if(not desempatado):
