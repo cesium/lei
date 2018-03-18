@@ -26,7 +26,7 @@ public class Grafos {
      * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws JSONException, FileNotFoundException {
-           
+        long antes = System.nanoTime();
         /* Ler e guardar ficheiro JSON num objeto JSON */
         Scanner s= new Scanner(new FileReader("../../../estruturaDados_v2.txt"));
         StringBuilder sb = new StringBuilder();
@@ -153,7 +153,8 @@ public class Grafos {
                 System.out.println("Nao existem ciclos no Grafo a serem resolvidos!!!!");
             }
         }
-           
+        long depois = System.nanoTime();
+        System.out.println("Tempo decorrido: " + (depois - antes)/1000000 + " milissegundos");
     }
 
     private static int getMinDataCiclo(DefaultDirectedWeightedGraph<String, LPretencoes> graph, List<String> ciclo,int minData) {

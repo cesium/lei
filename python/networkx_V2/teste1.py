@@ -5,7 +5,7 @@ import math
 import sys
 from pprint import pprint
 import copy
-
+import time
 
 def getMinDataCiclo(grafo,ciclo,minData):
     minDataCiclo = sys.maxsize
@@ -19,11 +19,10 @@ def getMinDataCiclo(grafo,ciclo,minData):
         return minData
     return minDataCiclo
 
-
+antes = time.time()
 json_file = open("../../estruturaDados_v2.txt")
 json_data = json.load(json_file)
 json_file.close()
-antes = copy.deepcopy(json_data)
 for disciplina in json_data:
     uc = json_data[disciplina]
     lista_turnos = []
@@ -126,5 +125,6 @@ for disciplina in json_data:
             print(troca_a_remover)
             uc.remove(troca_a_remover)
         print("------------------------------------------")
-            
+depois = time.time()
+print("Tempo decorrido: " + str(int((depois-antes)*1000)) + " milissegundos")
             
