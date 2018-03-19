@@ -73,11 +73,11 @@ public class Grafos {
             for(Pretencao aresta: arestas){
                 LPretencoes Lpreten=graph.getEdge(aresta.getFrom_shift_id(),aresta.getTo_shift_id());
                 if(Lpreten!=null){
-                    graph.getEdge(aresta.getFrom_shift_id(),aresta.getTo_shift_id()).pretencoes.add(aresta);
+                    graph.getEdge(aresta.getFrom_shift_id(),aresta.getTo_shift_id()).addPretencao(aresta);
                 }
                 else{
                     LPretencoes novaLp= new LPretencoes();
-                    novaLp.pretencoes.add(aresta);
+                    novaLp.addPretencao(aresta);
                     graph.addEdge(aresta.getFrom_shift_id(),aresta.getTo_shift_id(),novaLp);
                 }     
             }     
@@ -140,11 +140,8 @@ public class Grafos {
                 
                 for(int k=0;k<ciclo_A_resolver.size()-1;++k){
                     LPretencoes pAr=graph.getEdge(ciclo_A_resolver.get(k),ciclo_A_resolver.get(k+1));
-                    Comparator <Pretencao> comparator; 
-                    comparator= (p1,p2)->Integer.compare(p1.getCreated_at(),p2.getCreated_at());
-                    Pretencao pc=pAr.pretencoes.stream().min(comparator).get();
-                    System.out.println(pc.getId());
-                    System.out.println("\tcreated_at: "+pc.getCreated_at()+ "\n\tfrom_shift_id:" +pc.getFrom_shift_id()+"\n\tto_shift_id:"+pc.getTo_shift_id());
+                    Pretencao pc=pAr.getMinPretencao();
+                    System.out.println(pc.toString());
                 }
                 
             }
@@ -161,25 +158,10 @@ public class Grafos {
         int minDataCiclo = Integer.MAX_VALUE;
         for(int k=0;k<ciclo.size()-1;++k){
             LPretencoes lpc = graph.getEdge(ciclo.get(k),ciclo.get(k+1));
-            Comparator <Pretencao> comparator = (p1,p2)->Integer.compare(p1.getCreated_at(),p2.getCreated_at());
-            List<Pretencao> pc=lpc.pretencoes.stream().sorted(comparator).collect(Collectors.toList());
-            int minDataAresta = Integer.MAX_VALUE;
-            boolean naoConta = false;
-            for(int i=0; i<pc.size() ; i++){
-                int dataAresta = pc.get(i).getCreated_at();
-                if(dataAresta <= minData){
-                    naoConta=true;
-                    break;
-                }
-                if(dataAresta > minData &&
-                   dataAresta < minDataAresta ){
-                    minDataAresta = dataAresta;
-                }
-            }
-            if(!naoConta && minDataAresta < minDataCiclo){
+            int minDataAresta = lpc.getMinData();
+            if( minDataAresta > minData && minDataAresta < minDataCiclo){
                 minDataCiclo = minDataAresta;
             }
-            
         }
         if(minDataCiclo == Integer.MAX_VALUE){
             System.out.println("ESTE CICLO NAO TEM NENHUMA ARESTA COM MENOR PESO!!!");

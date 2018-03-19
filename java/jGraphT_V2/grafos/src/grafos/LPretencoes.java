@@ -12,18 +12,39 @@ import java.util.ArrayList;
  * @author Bruno
  */
 public class LPretencoes {
-    ArrayList<Pretencao> pretencoes;
-
+    private ArrayList<Pretencao> pretencoes;
+    private int minData;
+    private Pretencao minPretencao ;
     public LPretencoes() {
-        pretencoes = new ArrayList<Pretencao>();
+        pretencoes = new ArrayList<>();
+        minData = Integer.MAX_VALUE;
+        minPretencao = null;
     }
     
-   public String toString(){
-       String ret="[";
-       for(Pretencao p : pretencoes){
-           ret += p.toString();
-       }
-       ret+="]";
-       return ret;
-   }
+    public String toString(){
+        String ret="[";
+        for(Pretencao p : pretencoes){
+            ret += p.toString();
+        }
+        ret+="]";
+        return ret;
+    }
+    
+    public void addPretencao(Pretencao p){
+        pretencoes.add(p);
+        if(p.getCreated_at() < minData){
+            minData = p.getCreated_at();
+            minPretencao = p;
+        }
+    }
+    
+    public int getMinData(){
+        return minData;
+    }
+    
+    public Pretencao getMinPretencao(){
+        return minPretencao;
+    }
+    
+    
 }
