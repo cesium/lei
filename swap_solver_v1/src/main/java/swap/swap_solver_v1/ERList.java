@@ -13,11 +13,11 @@ import java.util.ArrayList;
  */
 public class ERList {
      private ArrayList<ExchangeRequest> exchangeRequests;
-    private int minData;
+    private int minDate;
     private ExchangeRequest minExchangeRequest ;
     public ERList() {
         exchangeRequests = new ArrayList<>();
-        minData = Integer.MAX_VALUE;
+        minDate = Integer.MAX_VALUE;
         minExchangeRequest = null;
     }
     
@@ -33,14 +33,14 @@ public class ERList {
     
     public void addExchangeRequest(ExchangeRequest p){
         exchangeRequests.add(p);
-        if(p.getCreated_at() < minData){
-            minData = p.getCreated_at();
+        if(p.getCreated_at() < minDate){
+            minDate = p.getCreated_at();
             minExchangeRequest = p;
         }
     }
     
-    public int getMinData(){
-        return minData;
+    public int getMinDate(){
+        return minDate;
     }
     
     public ExchangeRequest getMinExchangeRequest(){

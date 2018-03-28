@@ -22,22 +22,11 @@ public class ExchangeRequest {
         this.id=id;
     }
     
-    /*GET's*/
+    /* GETTERS */
     String getFrom_shift_id(){return this.from_shift_id;}
     String getTo_shift_id(){return this.to_shift_id;}
     int getCreated_at(){return this.created_at;}
     String getId(){return this.id;}
-    
-   /* Boolean equals(ExchangeRequest a, ExchangeRequest b){
-       return (a.data == b.data && a.destino==b.destino &&  a.origem==b.origem); 
-    }
-    */
-    /* SET'S */
-    
-    void setFrom_shift_id(String from_shift_id){this.from_shift_id=from_shift_id;}
-    void setTo_shift_id(String to_shift_id){this.to_shift_id=to_shift_id;}
-    void setCreated_at(int data){this.created_at=created_at;}
-    void setId(String mecanografico){this.id=id;}
     
     @Override
     public String toString(){

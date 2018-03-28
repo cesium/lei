@@ -26,147 +26,156 @@ import org.json.JSONObject;
 
 public class SwapSolver {
     public static void main(String[] args) throws JSONException, FileNotFoundException {
-        long antes = System.nanoTime();
-        /* Ler e guardar ficheiro JSON num objeto JSON */
-        Scanner s= new Scanner(new FileReader("../estruturaDados_v2.txt"));
-        StringBuilder sb = new StringBuilder();
-
-        while(s.hasNext()){
-         sb.append(s.next());
-        }
-        s.close();
-        JSONObject obj = new JSONObject(sb.toString());
-        /* Ler e guardar ficheiro JSON num objeto JSON */
-
-        /* Iterar Sobre o Objecto JSON */
-
+        long timeBefore = System.nanoTime();
+        
+	JSONObject obj= readInputFile();
         JSONArray keys = obj.names();
+        // Let's iterate over every course (since each course is an individual problem to solve)
         for (int i = 0; i < keys.length (); ++i) {
-            ArrayList<ExchangeRequest> arestas = new ArrayList<>();
-            
-            String uc = keys.getString (i); // key---> correponde à cadeira//
-            //System.out.println(uc);
-            JSONArray trocas = obj.getJSONArray(uc);
-            
-            DefaultDirectedWeightedGraph<String,ERList> graph;
-            graph =new DefaultDirectedWeightedGraph<>(ERList.class);
-            
-            for(int j=0;j<trocas.length();j++){ 
-                //iterar sobre as pretencoes de troca do turno // 
-                JSONObject troca = trocas.getJSONObject(j); 
-                String turnoO=troca.get("from_shift_id").toString();
-                String turnoD=troca.get("to_shift_id").toString();
-                String idTroca=troca.get("id").toString();
-                Integer data=(Integer) troca.get("created_at");
-                ExchangeRequest p= new ExchangeRequest(data, turnoO,turnoD,idTroca);
-
-                if(!graph.vertexSet().contains(turnoO)){
-                    graph.addVertex(turnoO);
-                }
-                if(!graph.vertexSet().contains(turnoD)){
-                    graph.addVertex(turnoD);
-                }
-                if(!arestas.contains(p)){
-                    arestas.add(p);
-                }            
-            }
-            
-            
-            for(ExchangeRequest aresta: arestas){
-                ERList Lpreten=graph.getEdge(aresta.getFrom_shift_id(),aresta.getTo_shift_id());
-                if(Lpreten!=null){
-                    graph.getEdge(aresta.getFrom_shift_id(),aresta.getTo_shift_id()).addExchangeRequest(aresta);
-                }
-                else{
-                    ERList novaLp= new ERList();
-                    novaLp.addExchangeRequest(aresta);
-                    graph.addEdge(aresta.getFrom_shift_id(),aresta.getTo_shift_id(),novaLp);
-                }     
-            }     
+            String courseName = keys.getString(i);
+            JSONArray course = obj.getJSONArray(courseName); // key ---> each key is a course's name
+            ArrayList<ExchangeRequest> courseExchangeRequests = parseRequestsFromJSON(course);
+            DefaultDirectedWeightedGraph<String,ERList> graph = buildGraph(courseExchangeRequests);            
+              
             TarjanSimpleCycles tsc;
             tsc=new TarjanSimpleCycles(); 
             tsc.setGraph(graph);
-            List<List<String> > listaCiclos= tsc.findSimpleCycles();
+            List<List<String> > cycleList= tsc.findSimpleCycles();
             
-            if(listaCiclos.size()>0){
+            if(cycleList.size()>0){
             //Existem ciclos no grafo
-                int longest=listaCiclos.stream().mapToInt(List::size).max().orElse(-1);
-                List<List<String>> maioresCiclos= listaCiclos.stream().filter(x->x.size()==longest).collect(toList());
-                System.out.println("--------Trocas na uc:" +uc+ "----");
-                System.out.println("Maiores ciclos:"+maioresCiclos.toString());
+                int longest=cycleList.stream().mapToInt(List::size).max().orElse(-1);
+                List<List<String>> biggestCycles= cycleList.stream().filter(x->x.size()==longest).collect(toList());
+                System.out.println("--------Exchanges in course " + courseName + "----");
+                System.out.println("Biggest cycles:" + biggestCycles.toString());
                 
-                for(List<String> ciclo : maioresCiclos){
-                    ciclo.add(ciclo.get(0));
-                }
-                
-                List<String> ciclo_A_resolver;
+                for(List<String> ciclo : biggestCycles) ciclo.add(ciclo.get(0));
+                List<String> cycleToSolve;
 
-                if(maioresCiclos.size()>1){
-                 //Há Empate//
-                    int minData =0;
-                    HashMap<Integer,List<List<String>>> minDataCiclos;
-                    boolean desempatado;
-                    int maxIters = graph.vertexSet().size() -1;
-                    int iter = 0;
-                    do{
-                        minDataCiclos = new HashMap<>();
-                        for(List<String> ciclo: maioresCiclos){
-                            int minDataCiclo=getMinDataCiclo(graph,ciclo,minData);
-                            if(minDataCiclos.containsKey(minDataCiclo)){
-                                minDataCiclos.get(minDataCiclo).add(ciclo);
-                            }
-                            else{
-                                List<List<String>> listaDeCiclos = new ArrayList<>();
-                                listaDeCiclos.add(ciclo);
-                                minDataCiclos.put(minDataCiclo, listaDeCiclos);
-                            }
-                        }
-                        minData = Collections.min(minDataCiclos.keySet());
-                        //System.out.println(minDataCiclos);
-                        //new Scanner(System.in).next();
-                        desempatado = minDataCiclos.get(minData).size() == 1;
-                        if(!desempatado){
-                            maioresCiclos = minDataCiclos.get(minData);
-                        }
-                    }
-                    while(!desempatado && (++iter != maxIters));
-                    if(iter == maxIters) System.out.println("\nmaxIters atingido!!!\n");
-                    ciclo_A_resolver = minDataCiclos.get(minData).get(0);
-                    
+                if(biggestCycles.size()>1){
+                 // There is a draw in deciding which set of exchanges will be resolved
+                    cycleToSolve = resolveDraw(biggestCycles,graph);
                 }
                 else{
-                    ciclo_A_resolver = maioresCiclos.get(0);
+                    cycleToSolve = biggestCycles.get(0);
                 }
                 
-                for(int k=0;k<ciclo_A_resolver.size()-1;++k){
-                    ERList pAr=graph.getEdge(ciclo_A_resolver.get(k),ciclo_A_resolver.get(k+1));
+                for(int k=0;k<cycleToSolve.size()-1;++k){
+                    ERList pAr=graph.getEdge(cycleToSolve.get(k),cycleToSolve.get(k+1));
                     ExchangeRequest pc=pAr.getMinExchangeRequest();
                     System.out.println(pc.toString());
                 }
-                
+            }
+            else{ // There aren't any cycles to solve on the graph 
+                System.out.println("There are no possible exchanges to make!!!!");
+            }
+        }
+        long timeAfter = System.nanoTime();
+        System.out.println("Elapsed time: " + (timeAfter - timeBefore)/1000000 + " milliseconds");
+    }
+    
+    private static JSONObject readInputFile() throws FileNotFoundException{   
+            Scanner s= new Scanner(new FileReader("../estruturaDados_v2.txt"));
+            StringBuilder sb = new StringBuilder();
+            while(s.hasNext()) sb.append(s.next());
+            s.close();
+           return (new JSONObject(sb.toString()));
+    }
+    
+    private static int minimumDateOfCycle(DefaultDirectedWeightedGraph<String, ERList> graph,
+                                            List<String> cycle,
+                                            int minimumCommonDate) {
+        int minimumDateOfCycle = Integer.MAX_VALUE;
+        for(int k=0;k<cycle.size()-1;++k){
+            ERList erl = graph.getEdge(cycle.get(k),cycle.get(k+1));
+            int minimumDateOfEdge = erl.getMinDate();
+            if( minimumDateOfEdge > minimumCommonDate && minimumDateOfEdge < minimumDateOfCycle){
+                minimumDateOfCycle = minimumDateOfEdge;
+            }
+        }
+        /*     At this point we have the guarantee that minimumDateOfCycle is
+         * different than Integer.MAX_VALUE
+         *     Every edge in a cycle belongs to a different person, therefore
+         * every edge has a different minimumDateOfEdge
+         *     If at this point minimumDateOfCycle were equal to
+         * Integer.MAX_VALUE it would mean that every edge in this cycle would
+         * have a minimunDateOfEdge smaller than minimumCommonDate (which is
+         * impossible since we limit the number of iterations)
+        */
+        return minimumDateOfCycle;
+    }
+    
+    private static DefaultDirectedWeightedGraph<String, ERList> buildGraph(ArrayList<ExchangeRequest> edges){
+        DefaultDirectedWeightedGraph<String,ERList> graph = new DefaultDirectedWeightedGraph<>(ERList.class);
+        
+        for(ExchangeRequest edge: edges){
+            String fromShift = edge.getFrom_shift_id();
+            String toShift = edge.getTo_shift_id();
+            if(!graph.vertexSet().contains(fromShift)){
+                graph.addVertex(fromShift);
+            }
+            if(!graph.vertexSet().contains(toShift)){
+                graph.addVertex(toShift);
+            }
+            
+            ERList erList=graph.getEdge(edge.getFrom_shift_id(),edge.getTo_shift_id());
+            if(erList!=null){
+                graph.getEdge(edge.getFrom_shift_id(),edge.getTo_shift_id()).addExchangeRequest(edge);
             }
             else{
-            //Não existem ciclos no grafo 
-                System.out.println("Nao existem ciclos no Grafo a serem resolvidos!!!!");
-            }
-        }
-        long depois = System.nanoTime();
-        System.out.println("Tempo decorrido: " + (depois - antes)/1000000 + " milissegundos");
+                ERList newERList= new ERList();
+                newERList.addExchangeRequest(edge);
+                graph.addEdge(edge.getFrom_shift_id(),edge.getTo_shift_id(),newERList);
+            }     
+        }   
+        return graph;
     }
 
-    private static int getMinDataCiclo(DefaultDirectedWeightedGraph<String, ERList> graph, List<String> ciclo,int minData) {
-        int minDataCiclo = Integer.MAX_VALUE;
-        for(int k=0;k<ciclo.size()-1;++k){
-            ERList lpc = graph.getEdge(ciclo.get(k),ciclo.get(k+1));
-            int minDataAresta = lpc.getMinData();
-            if( minDataAresta > minData && minDataAresta < minDataCiclo){
-                minDataCiclo = minDataAresta;
+    private static ArrayList<ExchangeRequest> parseRequestsFromJSON(JSONArray courseExchanges) {
+        ArrayList<ExchangeRequest> requests = new ArrayList<>();
+        for(int j=0;j<courseExchanges.length();j++){ 
+            // iterate over every exchange request of a given course
+            JSONObject exchange = courseExchanges.getJSONObject(j); 
+            String fromShift=exchange.get("from_shift_id").toString();
+            String toShift=exchange.get("to_shift_id").toString();
+            String exchangeID=exchange.get("id").toString();
+            Integer requestDate=(Integer) exchange.get("created_at");
+            ExchangeRequest er= new ExchangeRequest(requestDate, fromShift,toShift,exchangeID);
+            requests.add(er);
+        }
+        return requests;
+    }
+
+    private static List<String> resolveDraw(List<List<String>> cycles,
+                                            DefaultDirectedWeightedGraph<String,ERList> graph) {
+        int minDate =0;
+        HashMap<Integer,List<List<String>>> cyclesBySize;
+        boolean isResolved;
+        int maxIters = graph.vertexSet().size() -1;
+        int iter = 0;
+        do{
+            cyclesBySize = new HashMap<>();
+            for(List<String> cycle: cycles){
+                int cycleMinimumDate=minimumDateOfCycle(graph,cycle,minDate);
+                if(cyclesBySize.containsKey(cycleMinimumDate)){
+                    cyclesBySize.get(cycleMinimumDate).add(cycle);
+                }
+                else{
+                    List<List<String>> cycleList = new ArrayList<>();
+                    cycleList.add(cycle);
+                    cyclesBySize.put(cycleMinimumDate, cycleList);
+                }
+            }
+            minDate = Collections.min(cyclesBySize.keySet());
+            //System.out.println(cyclesBySize);
+            //new Scanner(System.in).next();
+            isResolved = cyclesBySize.get(minDate).size() == 1;
+            if(!isResolved){
+                cycles = cyclesBySize.get(minDate);
             }
         }
-        if(minDataCiclo == Integer.MAX_VALUE){
-            System.out.println("ESTE CICLO NAO TEM NENHUMA ARESTA COM MENOR PESO!!!");
-            return minData;
-        }
-        return minDataCiclo;
+        while(!isResolved && (++iter != maxIters));
+        if(iter == maxIters) System.out.println("\nmaximum number of iterations reached!!!\n");
+        return cyclesBySize.get(minDate).get(0);
     }
 }
