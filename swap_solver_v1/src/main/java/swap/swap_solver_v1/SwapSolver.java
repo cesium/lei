@@ -28,7 +28,7 @@ public class SwapSolver {
     public static void main(String[] args) throws JSONException, FileNotFoundException {
         long antes = System.nanoTime();
         /* Ler e guardar ficheiro JSON num objeto JSON */
-        Scanner s= new Scanner(new FileReader("../../../estruturaDados_v2.txt"));
+        Scanner s= new Scanner(new FileReader("../estruturaDados_v2.txt"));
         StringBuilder sb = new StringBuilder();
 
         while(s.hasNext()){
