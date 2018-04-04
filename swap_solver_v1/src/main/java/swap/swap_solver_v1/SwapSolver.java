@@ -1,54 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package swap.swap_solver_v1;
 
-/**
- *
- * @author Bruno
- */
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 import static java.util.stream.Collectors.toList;
 import org.jgrapht.alg.cycle.TarjanSimpleCycles;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import spark.Spark;
 
 public class SwapSolver {
     public static void main(String[] args) throws JSONException, FileNotFoundException {
-        long timeBefore = System.nanoTime();
-        
-	JSONObject obj= readInputFile();
-        JSONArray keys = obj.names();
-        // Let's iterate over every course (since each course is an individual problem to solve)
-        for (int i = 0; i < keys.length (); ++i) {
-            String courseName = keys.getString(i);
-            JSONArray course = obj.getJSONArray(courseName); // key ---> each key is a course's name
-            ArrayList<ExchangeRequest> courseExchangeRequests = parseRequestsFromJSON(course);
+        Spark.post("/", (req,res) -> {
+            String received = req.body();
+            JSONObject receivedJSON = new JSONObject(received);
+            JSONArray requests = receivedJSON.getJSONArray("exchange_requests");
+                
+            ArrayList<ExchangeRequest> courseExchangeRequests = parseRequestsFromJSON(requests);
             DefaultDirectedWeightedGraph<String,ERList> graph = buildGraph(courseExchangeRequests);            
-              
+
             TarjanSimpleCycles tsc;
             tsc=new TarjanSimpleCycles(); 
             tsc.setGraph(graph);
             List<List<String> > cycleList= tsc.findSimpleCycles();
-            
+
             if(cycleList.size()>0){
             //Existem ciclos no grafo
                 int longest=cycleList.stream().mapToInt(List::size).max().orElse(-1);
                 List<List<String>> biggestCycles= cycleList.stream().filter(x->x.size()==longest).collect(toList());
-                System.out.println("--------Exchanges in course " + courseName + "----");
-                System.out.println("Biggest cycles:" + biggestCycles.toString());
-                
+
                 for(List<String> ciclo : biggestCycles) ciclo.add(ciclo.get(0));
                 List<String> cycleToSolve;
 
@@ -60,26 +46,18 @@ public class SwapSolver {
                     cycleToSolve = biggestCycles.get(0);
                 }
                 
+                ArrayList<String> solvedExchanges = new ArrayList<>();
                 for(int k=0;k<cycleToSolve.size()-1;++k){
                     ERList pAr=graph.getEdge(cycleToSolve.get(k),cycleToSolve.get(k+1));
                     ExchangeRequest pc=pAr.getMinExchangeRequest();
-                    System.out.println(pc.toString());
+                    solvedExchanges.add(pc.id);
                 }
+                return "{solved_exchanges:" + solvedExchanges.toString() + "}";
             }
             else{ // There aren't any cycles to solve on the graph 
-                System.out.println("There are no possible exchanges to make!!!!");
+                return "{solved_exchanges:[]}";
             }
-        }
-        long timeAfter = System.nanoTime();
-        System.out.println("Elapsed time: " + (timeAfter - timeBefore)/1000000 + " milliseconds");
-    }
-    
-    private static JSONObject readInputFile() throws FileNotFoundException{   
-            Scanner s= new Scanner(new FileReader("../estruturaDados_v2.txt"));
-            StringBuilder sb = new StringBuilder();
-            while(s.hasNext()) sb.append(s.next());
-            s.close();
-           return (new JSONObject(sb.toString()));
+        });    
     }
     
     private static int minimumDateOfCycle(DefaultDirectedWeightedGraph<String, ERList> graph,
@@ -167,8 +145,6 @@ public class SwapSolver {
                 }
             }
             minDate = Collections.min(cyclesBySize.keySet());
-            //System.out.println(cyclesBySize);
-            //new Scanner(System.in).next();
             isResolved = cyclesBySize.get(minDate).size() == 1;
             if(!isResolved){
                 cycles = cyclesBySize.get(minDate);

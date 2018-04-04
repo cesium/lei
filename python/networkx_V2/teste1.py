@@ -49,13 +49,13 @@ for disciplina in json_data:
     for aresta in lista_arestas:
         grafo.add_edge(aresta[0],aresta[1],weight=min(aresta[2]))
     # DESENHAR O GRAFO
-    '''
+    
     pos=nx.spring_layout(grafo,scale=2,k=0.2,iterations=10)
     nx.draw(grafo,pos,with_labels=True)
     labels = nx.get_edge_attributes(grafo,'weight')
     nx.draw_networkx_edge_labels(grafo,pos,edge_labels=labels,font_size=8,rotate=False)
     plt.show()
-    '''
+    
     
     #ENCONTRAR TODOS CICLOS
     lista_ciclos = list(nx.simple_cycles(grafo))
