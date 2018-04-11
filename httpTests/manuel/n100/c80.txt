@@ -2,8 +2,7 @@ This is ApacheBench, Version 2.3 <$Revision: 1706008 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Licensed to The Apache Software Foundation, http://www.apache.org/
 
-Benchmarking 192.168.1.111 (be patient).....done
-
+Benchmarking 192.168.1.111 (be patient)...
 
 Server Software:        Jetty(9.4.8.v20171121)
 Server Hostname:        192.168.1.111
@@ -13,33 +12,33 @@ Document Path:          /
 Document Length:        55 bytes
 
 Concurrency Level:      80
-Time taken for tests:   4.613 seconds
-Complete requests:      100
+Time taken for tests:   1.200 seconds
+Complete requests:      3
 Failed requests:        0
-Total transferred:      18200 bytes
-Total body sent:        169600
-HTML transferred:       5500 bytes
-Requests per second:    21.68 [#/sec] (mean)
-Time per request:       3690.490 [ms] (mean)
-Time per request:       46.131 [ms] (mean, across all concurrent requests)
-Transfer rate:          3.85 [Kbytes/sec] received
-                        35.90 kb/s sent
-                        39.76 kb/s total
+Total transferred:      546 bytes
+Total body sent:        6784
+HTML transferred:       165 bytes
+Requests per second:    2.50 [#/sec] (mean)
+Time per request:       31995.653 [ms] (mean)
+Time per request:       399.946 [ms] (mean, across all concurrent requests)
+Transfer rate:          0.44 [Kbytes/sec] received
+                        5.52 kb/s sent
+                        5.97 kb/s total
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:       53  762 1387.0     77    3912
-Processing:    27 1397 1103.1   1042    3437
-Waiting:       27 1381 1098.3   1042    3435
-Total:         88 2159 1502.2   2220    4467
+Connect:       15  320 525.7    473     927
+Processing:    39   66  33.2     79     103
+Waiting:       39   65  33.6     78     103
+Total:         54  386 517.5    552     982
 
 Percentage of the requests served within a certain time (ms)
-  50%   2220
-  66%   3001
-  75%   3292
-  80%   3909
-  90%   4375
-  95%   4466
-  98%   4467
-  99%   4467
- 100%   4467 (longest request)
+  50%    121
+  66%    121
+  75%    982
+  80%    982
+  90%    982
+  95%    982
+  98%    982
+  99%    982
+ 100%    982 (longest request)
