@@ -1,0 +1,45 @@
+This is ApacheBench, Version 2.3 <$Revision: 1706008 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.1.98 (be patient)
+
+
+Server Software:        Jetty(9.4.8.v20171121)
+Server Hostname:        192.168.1.98
+Server Port:            4567
+
+Document Path:          /
+Document Length:        36 bytes
+
+Concurrency Level:      50
+Time taken for tests:   28.905 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      1630000 bytes
+Total body sent:        13790000
+HTML transferred:       360000 bytes
+Requests per second:    345.96 [#/sec] (mean)
+Time per request:       144.523 [ms] (mean)
+Time per request:       2.890 [ms] (mean, across all concurrent requests)
+Transfer rate:          55.07 [Kbytes/sec] received
+                        465.90 kb/s sent
+                        520.97 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       11   71 139.0     50    3051
+Processing:    13   73  75.9     57    1438
+Waiting:       12   72  75.5     56    1437
+Total:         38  144 170.1    111    3128
+
+Percentage of the requests served within a certain time (ms)
+  50%    111
+  66%    129
+  75%    144
+  80%    157
+  90%    207
+  95%    325
+  98%    553
+  99%    729
+ 100%   3128 (longest request)

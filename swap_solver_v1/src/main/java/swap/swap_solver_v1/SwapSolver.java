@@ -57,6 +57,7 @@ public class SwapSolver {
             else{ // There aren't any cycles to solve on the graph 
                 return "{solved_exchanges:[]}";
             }
+            
         });    
     }
     
