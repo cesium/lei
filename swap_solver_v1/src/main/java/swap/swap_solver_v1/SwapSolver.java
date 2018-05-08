@@ -18,47 +18,49 @@ import spark.Spark;
 public class SwapSolver {
     public static void main(String[] args) throws JSONException, FileNotFoundException {
         Spark.post("/", (req,res) -> {
-            String received = req.body();
-            JSONObject receivedJSON = new JSONObject(received);
-            JSONArray requests = receivedJSON.getJSONArray("exchange_requests");
-                
-            ArrayList<ExchangeRequest> courseExchangeRequests = parseRequestsFromJSON(requests);
-            DefaultDirectedWeightedGraph<String,ERList> graph = buildGraph(courseExchangeRequests);            
-
-            TarjanSimpleCycles tsc;
-            tsc=new TarjanSimpleCycles(); 
-            tsc.setGraph(graph);
-            List<List<String> > cycleList= tsc.findSimpleCycles();
-
-            if(cycleList.size()>0){
-            //Existem ciclos no grafo
-                int longest=cycleList.stream().mapToInt(List::size).max().orElse(-1);
-                List<List<String>> biggestCycles= cycleList.stream().filter(x->x.size()==longest).collect(toList());
-
-                for(List<String> ciclo : biggestCycles) ciclo.add(ciclo.get(0));
-                List<String> cycleToSolve;
-
-                if(biggestCycles.size()>1){
-                 // There is a draw in deciding which set of exchanges will be resolved
-                    cycleToSolve = resolveDraw(biggestCycles,graph);
-                }
-                else{
-                    cycleToSolve = biggestCycles.get(0);
-                }
-                
-                ArrayList<String> solvedExchanges = new ArrayList<>();
-                for(int k=0;k<cycleToSolve.size()-1;++k){
-                    ERList pAr=graph.getEdge(cycleToSolve.get(k),cycleToSolve.get(k+1));
-                    ExchangeRequest pc=pAr.getMinExchangeRequest();
-                    solvedExchanges.add(pc.id);
-                }
-                return "{solved_exchanges:" + solvedExchanges.toString() + "}";
-            }
-            else{ // There aren't any cycles to solve on the graph 
-                return "{solved_exchanges:[]}";
-            }
-            
+            return resolveExchanges(req.body());
         });    
+    }
+    
+    public static String resolveExchanges(String jsonString){
+        JSONObject receivedJSON = new JSONObject(jsonString);
+        JSONArray requests = receivedJSON.getJSONArray("exchange_requests");
+
+        ArrayList<ExchangeRequest> courseExchangeRequests = parseRequestsFromJSON(requests);
+        DefaultDirectedWeightedGraph<String,ERList> graph = buildGraph(courseExchangeRequests);            
+
+        TarjanSimpleCycles tsc;
+        tsc=new TarjanSimpleCycles(); 
+        tsc.setGraph(graph);
+        List<List<String> > cycleList= tsc.findSimpleCycles();
+
+        if(cycleList.size()>0){
+        //Existem ciclos no grafo
+            int longest=cycleList.stream().mapToInt(List::size).max().orElse(-1);
+            List<List<String>> biggestCycles= cycleList.stream().filter(x->x.size()==longest).collect(toList());
+
+            for(List<String> ciclo : biggestCycles) ciclo.add(ciclo.get(0));
+            List<String> cycleToSolve;
+
+            if(biggestCycles.size()>1){
+             // There is a draw in deciding which set of exchanges will be resolved
+                cycleToSolve = resolveDraw(biggestCycles,graph);
+            }
+            else{
+                cycleToSolve = biggestCycles.get(0);
+            }
+
+            ArrayList<String> solvedExchanges = new ArrayList<>();
+            for(int k=0;k<cycleToSolve.size()-1;++k){
+                ERList pAr=graph.getEdge(cycleToSolve.get(k),cycleToSolve.get(k+1));
+                ExchangeRequest pc=pAr.getMinExchangeRequest();
+                solvedExchanges.add("\""+pc.id+"\"");
+            }
+            return "{\"solved_exchanges\":" + solvedExchanges.toString() + "}";
+        }
+        else{ // There aren't any cycles to solve on the graph 
+            return "{\"solved_exchanges\":[]}";
+        }
     }
     
     private static int minimumDateOfCycle(DefaultDirectedWeightedGraph<String, ERList> graph,
