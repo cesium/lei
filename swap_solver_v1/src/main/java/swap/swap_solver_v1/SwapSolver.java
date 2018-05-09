@@ -22,11 +22,22 @@ public class SwapSolver {
         });    
     }
     
+    /**
+    * Receives a string representing a json object containing a list of exchange
+    * requests from students and returns a list of identifiers of the exchange
+    * requests to be actually made
+    * 
+    * @param  jsonString a string with textual representation of a json object
+    * containing a list of exchange requests from students
+    * @return Returns a string with textual representation of a json object
+    * containing a list of identifiers (can be an empty list if there are no
+    * possible exchanges)
+    */
     public static String resolveExchanges(String jsonString){
         JSONObject receivedJSON = new JSONObject(jsonString);
         JSONArray requests = receivedJSON.getJSONArray("exchange_requests");
 
-        ArrayList<ExchangeRequest> courseExchangeRequests = parseRequestsFromJSON(requests);
+        List<ExchangeRequest> courseExchangeRequests = parseRequestsFromJSON(requests);
         DefaultDirectedWeightedGraph<String,ERList> graph = buildGraph(courseExchangeRequests);            
 
         TarjanSimpleCycles tsc;
@@ -63,6 +74,16 @@ public class SwapSolver {
         }
     }
     
+    /**
+    * Calculates the timestamp of the exchange request made earlier in the given 
+    * cycle but isn't earlier than the given minimumCommonDate
+    * 
+    * @param  graph  the graph in which the cycle is present
+    * @param  cycle  the cycle where the minimum date is to be found
+    * @param  minimumCommonDate the lower bound for the return value
+    * @return Returns the timestamp of the exchange request made earlier in the
+    * given cycle but isn't earlier than the given minimumCommonDate
+    */
     private static int minimumDateOfCycle(DefaultDirectedWeightedGraph<String, ERList> graph,
                                             List<String> cycle,
                                             int minimumCommonDate) {
@@ -81,12 +102,19 @@ public class SwapSolver {
          *     If at this point minimumDateOfCycle were equal to
          * Integer.MAX_VALUE it would mean that every edge in this cycle would
          * have a minimunDateOfEdge smaller than minimumCommonDate (which is
-         * impossible since we limit the number of iterations)
+         * impossible since the number of iterations is limited in the "resolveDraw" method)
         */
         return minimumDateOfCycle;
     }
     
-    private static DefaultDirectedWeightedGraph<String, ERList> buildGraph(ArrayList<ExchangeRequest> edges){
+    /**
+    * Converts a List&lt;ExchangeRequest&gt containing exchange requests from 
+    * students to a directed graph in which each edge has a ERList associated;
+    * 
+    * @param  edges  list of exchange requests from students
+    * @return Returns the constructed directed graph from the exchange requests
+    */
+    private static DefaultDirectedWeightedGraph<String, ERList> buildGraph(List<ExchangeRequest> edges){
         DefaultDirectedWeightedGraph<String,ERList> graph = new DefaultDirectedWeightedGraph<>(ERList.class);
         
         for(ExchangeRequest edge: edges){
@@ -112,7 +140,15 @@ public class SwapSolver {
         return graph;
     }
 
-    private static ArrayList<ExchangeRequest> parseRequestsFromJSON(JSONArray courseExchanges) {
+    /**
+    * Converts a JSONArray to a List&lt;ExchangeRequest&gt;
+    * 
+    * @param  courseExchanges  the JSONArray containing exchange 
+    * requests from students
+    * @return Returns a List of ExchangeRequest objects containing the same 
+    * information as the given parameter
+    */
+    private static List<ExchangeRequest> parseRequestsFromJSON(JSONArray courseExchanges) {
         ArrayList<ExchangeRequest> requests = new ArrayList<>();
         for(int j=0;j<courseExchanges.length();j++){ 
             // iterate over every exchange request of a given course
@@ -126,7 +162,16 @@ public class SwapSolver {
         }
         return requests;
     }
-
+    
+    /**
+    * Resolves the cycle to be solved when there is a draw in deciding which 
+    * cycle to solve
+    * 
+    * @param  cycles  a List of cycles (each cycle is a List of nodes represented by a String)
+    * @param  graph the graph which contains the cycles given
+    * @return Returns the cycle which contains the request(s) made earlier than
+    * the requests in other cycles 
+    */
     private static List<String> resolveDraw(List<List<String>> cycles,
                                             DefaultDirectedWeightedGraph<String,ERList> graph) {
         int minDate =0;
