@@ -50,7 +50,6 @@
               <archive>
                 <manifest>
                   <addClasspath>true</addClasspath>
-                  <classpathPrefix>lib/</classpathPrefix>
                   <mainClass>swap.swap_solver_v1.SwapSolver</mainClass>
                 </manifest>
               </archive>
