@@ -34,5 +34,13 @@ public class ExchangeRequest {
                ", to: " + this.to_shift_id + 
                ", created_at: " + this.created_at +
                ", id: " + this.id + "}";
-    }   
+    }
+    
+    public boolean equalsER(ExchangeRequest er){
+       return ((er.created_at==this.created_at) && 
+               (er.from_shift_id.equals(this.from_shift_id)) &&
+               (er.to_shift_id.equals(this.to_shift_id)) &&
+               (er.id.equals(this.id))
+               );
+    }
 }

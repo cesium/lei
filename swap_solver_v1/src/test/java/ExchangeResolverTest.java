@@ -4,20 +4,8 @@
  * and open the template in the editor.
  */
 
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.JSONArray;
+
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import swap.swap_solver_v1.SwapSolver;
