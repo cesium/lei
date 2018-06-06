@@ -19,6 +19,7 @@ public class SwapSolver {
 
     public static void main(String[] args) throws JSONException, FileNotFoundException {
         Spark.post("/", (req, res) -> {
+            
             return resolveExchanges(req.body());
         });
     }
@@ -37,7 +38,7 @@ public class SwapSolver {
     public static String resolveExchanges(String jsonString) {
         JSONObject receivedJSON = new JSONObject(jsonString);
         JSONArray requests = receivedJSON.getJSONArray("exchange_requests");
-
+        
         List<ExchangeRequest> courseExchangeRequests = parseRequestsFromJSON(requests);
         DefaultDirectedWeightedGraph<String, ERList> graph = buildGraph(courseExchangeRequests);
 
@@ -69,6 +70,7 @@ public class SwapSolver {
                 ExchangeRequest pc = pAr.getMinExchangeRequest();
                 solvedExchanges.add("\"" + pc.id + "\"");
             }
+            System.out.println(""+Spark.activeThreadCount());
             return "{\"solved_exchanges\":" + solvedExchanges.toString() + "}";
         } else { // There aren't any cycles to solve on the graph 
             return "{\"solved_exchanges\":[]}";
