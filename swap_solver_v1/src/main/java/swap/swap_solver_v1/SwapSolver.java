@@ -19,7 +19,7 @@ public class SwapSolver {
 
     public static void main(String[] args) throws JSONException, FileNotFoundException {
         Spark.post("/", (req, res) -> {
-            
+            Spark.threadPool(2);
             return resolveExchanges(req.body());
         });
     }
