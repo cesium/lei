@@ -14,12 +14,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import spark.Spark;
+import static spark.Spark.threadPool;
+
 
 public class SwapSolver {
 
     public static void main(String[] args) throws JSONException, FileNotFoundException {
+        /*int maxThreads = 4;
+            int minThreads = 2;
+            int timeOutMillis = 30000;
+            threadPool(maxThreads, minThreads, timeOutMillis);*/
         Spark.post("/", (req, res) -> {
-            Spark.threadPool(2);
             return resolveExchanges(req.body());
         });
     }
