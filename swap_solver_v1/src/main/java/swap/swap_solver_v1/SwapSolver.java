@@ -22,8 +22,8 @@ public class SwapSolver {
     public static void main(String[] args) throws JSONException, FileNotFoundException {
         /*int maxThreads = 4;
             int minThreads = 2;
-            int timeOutMillis = 30000;
-            threadPool(maxThreads, minThreads, timeOutMillis);*/
+            int timeOutMillis = 30000;*/
+        threadPool(4);
         Spark.post("/", (req, res) -> {
             return resolveExchanges(req.body());
         });
