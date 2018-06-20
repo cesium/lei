@@ -21,13 +21,13 @@ public class MinimuDateOfCycle {
     public void test1() {
         DefaultDirectedWeightedGraph<String, ERList> resultgraph = new DefaultDirectedWeightedGraph<>(ERList.class);
 
-        ExchangeRequest er;
+        
         resultgraph.addVertex("TP1");
         resultgraph.addVertex("TP2");
         resultgraph.addVertex("TP3");
         resultgraph.addVertex("TP4");
+        ExchangeRequest er;
         er = new ExchangeRequest(1, "TP1", "TP2", "a1");
-
         ERList tp1_tp2 = new ERList();
         tp1_tp2.addExchangeRequest(er);
         resultgraph.addEdge("TP1", "TP2", tp1_tp2);
