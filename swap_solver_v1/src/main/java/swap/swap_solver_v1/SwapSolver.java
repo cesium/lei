@@ -16,17 +16,18 @@ import org.json.JSONObject;
 import spark.Spark;
 import static spark.Spark.threadPool;
 
-
 public class SwapSolver {
 
     public static void main(String[] args) throws JSONException, FileNotFoundException {
         /*int maxThreads = 4;
-            int minThreads = 2;
-            int timeOutMillis = 30000;*/
+         int minThreads = 2;
+         int timeOutMillis = 30000;*/
+
         threadPool(4);
         Spark.post("/", (req, res) -> {
             return resolveExchanges(req.body());
         });
+
     }
 
     /**
@@ -43,7 +44,7 @@ public class SwapSolver {
     public static String resolveExchanges(String jsonString) {
         JSONObject receivedJSON = new JSONObject(jsonString);
         JSONArray requests = receivedJSON.getJSONArray("exchange_requests");
-        
+
         List<ExchangeRequest> courseExchangeRequests = parseRequestsFromJSON(requests);
         DefaultDirectedWeightedGraph<String, ERList> graph = buildGraph(courseExchangeRequests);
 
@@ -56,7 +57,7 @@ public class SwapSolver {
             //Existem ciclos no grafo
             int longest = cycleList.stream().mapToInt(List::size).max().orElse(-1);
             List<List<String>> biggestCycles = cycleList.stream().filter(x -> x.size() == longest).collect(toList());
-
+            System.out.println(biggestCycles);
             for (List<String> ciclo : biggestCycles) {
                 ciclo.add(ciclo.get(0));
             }
@@ -75,7 +76,7 @@ public class SwapSolver {
                 ExchangeRequest pc = pAr.getMinExchangeRequest();
                 solvedExchanges.add("\"" + pc.id + "\"");
             }
-            System.out.println(""+Spark.activeThreadCount());
+            System.out.println("" + Spark.activeThreadCount());
             return "{\"solved_exchanges\":" + solvedExchanges.toString() + "}";
         } else { // There aren't any cycles to solve on the graph 
             return "{\"solved_exchanges\":[]}";
@@ -180,7 +181,7 @@ public class SwapSolver {
      * @return Returns the cycle which contains the request(s) made earlier than
      * the requests in other cycles
      */
-    private static List<String> resolveDraw(List<List<String>> cycles,
+    public static List<String> resolveDraw(List<List<String>> cycles,
             DefaultDirectedWeightedGraph<String, ERList> graph) {
         int minDate = 0;
         HashMap<Integer, List<List<String>>> cyclesBySize;
@@ -210,29 +211,5 @@ public class SwapSolver {
         }
         return cyclesBySize.get(minDate).get(0);
     }
-
-    public static boolean isEqualGraph(DefaultDirectedWeightedGraph graphA, DefaultDirectedWeightedGraph graphB) {
-        Set<ERList> edgesA = graphA.edgeSet();
-        Set<ERList> edgesB = graphB.edgeSet();
-        Set<String> vertexA = graphA.vertexSet();
-        Set<String> vertexB = graphB.vertexSet();
-        int j = 0;
-        boolean res = true;
-
-        for (ERList erA : edgesA) {
-            j = 0;
-            for (ERList erB : edgesB) {
-                if (erB.equalsERL(erA)) {
-                    j = -1;
-                    break;
-                }
-            }
-            if (j == 0) {
-                res = false;
-                break;
-            }
-        }
-        System.out.println(vertexA.equals(vertexB));
-        return res && (vertexA.equals(vertexB));
-    }
+    
 }
