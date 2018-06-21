@@ -57,7 +57,7 @@ public class SwapSolver {
             //Existem ciclos no grafo
             int longest = cycleList.stream().mapToInt(List::size).max().orElse(-1);
             List<List<String>> biggestCycles = cycleList.stream().filter(x -> x.size() == longest).collect(toList());
-            //System.out.println(biggestCycles);
+            System.out.println(biggestCycles);
             for (List<String> ciclo : biggestCycles) {
                 ciclo.add(ciclo.get(0));
             }
