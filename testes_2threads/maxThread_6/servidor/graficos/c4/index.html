@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Servidor-2cpus 2018/06/21 15:11:37 - dstat2graphs</title>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet" />
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+      .sidebar-nav {
+        padding: 12px 4px;
+      }
+      .hero-unit {
+        padding: 24px;
+      }
+      th.header {
+        text-align: center;
+      }
+      td.number {
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">Processes</li>
+              <li><a href="#procs_rb">Processes running, blocked</a></li>
+              <li><a href="#procs_new">Processes new</a></li>
+              <li class="nav-header">Memory Usage</li>
+              <li><a href="#memory">Memory Usage</a></li>
+              <li class="nav-header">Paging</li>
+              <li><a href="#paging">Paging</a></li>
+              <li class="nav-header">Disk I/O</li>
+              <li><a href="#disk">Disk I/O total</a></li>
+              <li><a href="#disk_vda">Disk I/O vda</a></li>
+              <li class="nav-header">Disk IOPS</li>
+              <li><a href="#io">Disk IOPS total</a></li>
+              <li><a href="#io_vda">Disk IOPS vda</a></li>
+              <li class="nav-header">System</li>
+              <li><a href="#interrupts">Interrupts</a></li>
+              <li><a href="#cswitches">Context Switches</a></li>
+              <li class="nav-header">CPU Usage</li>
+              <li><a href="#cpu">CPU Usage total</a></li>
+              <li><a href="#cpu0">CPU Usage cpu0</a></li>
+              <li><a href="#cpu1">CPU Usage cpu1</a></li>
+              <li class="nav-header">Network I/O</li>
+              <li><a href="#net">Network I/O total</a></li>
+              <li><a href="#net_eth0">Network I/O eth0</a></li>
+              <li class="nav-header">Load Average</li>
+              <li><a href="#load">Load Average</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span9">
+          <div class="hero-unit">
+            <h1>dstat2graphs</h1>
+            <ul>
+              <li>Hostname: Servidor-2cpus</li>
+              <li>Datetime: 2018/06/21 15:11:37</li>
+              <li>Duration: 237 (Seconds)</li>
+            </ul>
+          </div>
+          <p><a href="d_20180622-030016_KZeAkdOz.zip">Download ZIP</a></p>
+          <h2>Processes</h2>
+          <h3 id="procs_rb">Processes running, blocked</h3>
+          <p><img src="procs_rb.png" alt="Processes running, blocked" /></p>
+          <p><img src="procs_run.png" alt="Processes running" /></p>
+          <p><img src="procs_blk.png" alt="Processes blocked" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Processes</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>running</td>
+                <td class="number">0.00</td>
+                <td class="number">3.81</td>
+                <td class="number">6.00</td>
+              </tr>
+              <tr>
+                <td>blocked</td>
+                <td class="number">0.00</td>
+                <td class="number">0.00</td>
+                <td class="number">0.00</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 id="procs_new">Processes new</h3>
+          <p><img src="procs_new.png" alt="Processes new" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Processes new (/second)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>new</td>
+                <td class="number">0.00</td>
+                <td class="number">0.07</td>
+                <td class="number">2.00</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <h2>Memory Usage</h2>
+          <h3 id="memory">Memory Usage</h3>
+          <p><img src="memory.png" alt="Memory Usage" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Memory Usage (Bytes)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>used</td>
+                <td class="number">305.44 M</td>
+                <td class="number">348.11 M</td>
+                <td class="number">397.65 M</td>
+              </tr>
+              <tr>
+                <td>used+buffer+cached</td>
+                <td class="number">1.04 G</td>
+                <td class="number">1.08 G</td>
+                <td class="number">1.13 G</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <h2>Paging</h2>
+          <h3 id="paging">Paging</h3>
+          <p><img src="paging.png" alt="Paging" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Paging (Bytes/second)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>page_in</td>
+                <td class="number">0.00  </td>
+                <td class="number">0.00  </td>
+                <td class="number">0.00  </td>
+              </tr>
+              <tr>
+                <td>page_out</td>
+                <td class="number">0.00  </td>
+                <td class="number">0.00  </td>
+                <td class="number">0.00  </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <h2>Disk I/O</h2>
+          <h3 id="disk">Disk I/O total</h3>
+          <p><img src="disk_rw.png" alt="Disk I/O total" /></p>
+          <p><img src="disk_r.png" alt="Disk I/O total read" /></p>
+          <p><img src="disk_w.png" alt="Disk I/O total write" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Disk I/O total (Bytes/second)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>read</td>
+                <td class="number">0.00  </td>
+                <td class="number">0.00  </td>
+                <td class="number">0.00  </td>
+              </tr>
+              <tr>
+                <td>write</td>
+                <td class="number">0.00  </td>
+                <td class="number">4.78 k</td>
+                <td class="number">48.00 k</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 id="disk_vda">Disk I/O vda</h3>
+          <p><img src="disk_vda_rw.png" alt="Disk I/O vda"></p>
+          <p><img src="disk_vda_r.png" alt="Disk I/O vda read"></p>
+          <p><img src="disk_vda_w.png" alt="Disk I/O vda write"></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Disk I/O vda (Bytes/second)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>read</td>
+                <td class="number">0.00  </td>
+                <td class="number">0.00  </td>
+                <td class="number">0.00  </td>
+              </tr>
+              <tr>
+                <td>write</td>
+                <td class="number">0.00  </td>
+                <td class="number">4.78 k</td>
+                <td class="number">48.00 k</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <h2>Disk IOPS</h2>
+          <h3 id="io">Disk IOPS total</h3>
+          <p><img src="io_rw.png" alt="Disk IOPS total" /></p>
+          <p><img src="io_r.png" alt="Disk IOPS total read" /></p>
+          <p><img src="io_w.png" alt="Disk IOPS total write" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Disk IOPS total (/second)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>read</td>
+                <td class="number">0.00</td>
+                <td class="number">0.00</td>
+                <td class="number">0.00</td>
+              </tr>
+              <tr>
+                <td>write</td>
+                <td class="number">0.00</td>
+                <td class="number">0.64</td>
+                <td class="number">8.00</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 id="io_vda">Disk IOPS vda</h3>
+          <p><img src="io_vda_rw.png" alt="Disk IOPS vda"></p>
+          <p><img src="io_vda_r.png" alt="Disk IOPS vda read"></p>
+          <p><img src="io_vda_w.png" alt="Disk IOPS vda write"></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Disk IOPS vda (/second)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>read</td>
+                <td class="number">0.00</td>
+                <td class="number">0.00</td>
+                <td class="number">0.00</td>
+              </tr>
+              <tr>
+                <td>write</td>
+                <td class="number">0.00</td>
+                <td class="number">0.64</td>
+                <td class="number">8.00</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <h2>System</h2>
+          <h3 id="interrupts">Interrupts</h3>
+          <p><img src="interrupts.png" alt="Interrupts" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Interrupts (/second)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>interrupts</td>
+                <td class="number">35.00</td>
+                <td class="number">4435.02</td>
+                <td class="number">4906.00</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 id="cswitches">Context Switches</h3>
+          <p><img src="cswitches.png" alt="Context Switches" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Context Switches (/second)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>context_switches</td>
+                <td class="number">67.00</td>
+                <td class="number">10461.77</td>
+                <td class="number">11945.00</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <h2>CPU Usage</h2>
+          <h3 id="cpu">CPU Usage total</h3>
+          <p><img src="cpu.png" alt="CPU Usage total" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">CPU Usage total (%)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>user</td>
+                <td class="number">0.00 %</td>
+                <td class="number">76.55 %</td>
+                <td class="number">85.58 %</td>
+              </tr>
+              <tr>
+                <td>user+system</td>
+                <td class="number">0.00 %</td>
+                <td class="number">84.20 %</td>
+                <td class="number">92.85 %</td>
+              </tr>
+              <tr>
+                <td>user+system+hardirq+softirq</td>
+                <td class="number">0.00 %</td>
+                <td class="number">87.07 %</td>
+                <td class="number">95.88 %</td>
+              </tr>
+              <tr>
+                <td>user+system+hardirq+softirq+wait</td>
+                <td class="number">0.00 %</td>
+                <td class="number">87.07 %</td>
+                <td class="number">95.88 %</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 id="cpu0">CPU Usage cpu0</h3>
+          <p><img src="cpu0.png" alt="CPU Usage cpu0" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">CPU Usage cpu0 (%)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>user</td>
+                <td class="number">0.00 %</td>
+                <td class="number">78.71 %</td>
+                <td class="number">89.80 %</td>
+              </tr>
+              <tr>
+                <td>user+system</td>
+                <td class="number">0.00 %</td>
+                <td class="number">86.01 %</td>
+                <td class="number">94.79 %</td>
+              </tr>
+              <tr>
+                <td>user+system+hardirq+softirq</td>
+                <td class="number">0.00 %</td>
+                <td class="number">86.01 %</td>
+                <td class="number">94.79 %</td>
+              </tr>
+              <tr>
+                <td>user+system+hardirq+softirq+wait</td>
+                <td class="number">0.00 %</td>
+                <td class="number">86.01 %</td>
+                <td class="number">94.79 %</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 id="cpu1">CPU Usage cpu1</h3>
+          <p><img src="cpu1.png" alt="CPU Usage cpu1" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">CPU Usage cpu1 (%)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>user</td>
+                <td class="number">0.00 %</td>
+                <td class="number">74.39 %</td>
+                <td class="number">85.86 %</td>
+              </tr>
+              <tr>
+                <td>user+system</td>
+                <td class="number">0.00 %</td>
+                <td class="number">82.40 %</td>
+                <td class="number">90.91 %</td>
+              </tr>
+              <tr>
+                <td>user+system+hardirq+softirq</td>
+                <td class="number">0.00 %</td>
+                <td class="number">88.13 %</td>
+                <td class="number">96.97 %</td>
+              </tr>
+              <tr>
+                <td>user+system+hardirq+softirq+wait</td>
+                <td class="number">0.00 %</td>
+                <td class="number">88.13 %</td>
+                <td class="number">96.97 %</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <h2>Network I/O</h2>
+          <h3 id="net">Network I/O total</h3>
+          <p><img src="net_rs.png" alt="Network I/O total" /></p>
+          <p><img src="net_r.png" alt="Network I/O total receive" /></p>
+          <p><img src="net_s.png" alt="Network I/O total send" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Network I/O total (Bytes/second)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>receive</td>
+                <td class="number">60.00  </td>
+                <td class="number">2.12 M</td>
+                <td class="number">2.29 M</td>
+              </tr>
+              <tr>
+                <td>send</td>
+                <td class="number">156.00  </td>
+                <td class="number">359.61 k</td>
+                <td class="number">396.15 k</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3 id="net_eth0">Network I/O eth0</h3>
+          <p><img src="net_eth0_rs.png" alt="Network I/O eth0" /></p>
+          <p><img src="net_eth0_r.png" alt="Network I/O eth0 receive" /></p>
+          <p><img src="net_eth0_s.png" alt="Network I/O eth0 send" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Network I/O eth0 (Bytes/second)</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>receive</td>
+                <td class="number">60.00  </td>
+                <td class="number">2.12 M</td>
+                <td class="number">2.29 M</td>
+              </tr>
+              <tr>
+                <td>send</td>
+                <td class="number">156.00  </td>
+                <td class="number">359.61 k</td>
+                <td class="number">396.15 k</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr />
+          <h2>Load Average</h2>
+          <h3 id="load">Load Average</h3>
+          <p><img src="load.png" alt="Load Average" /></p>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th class="header">Load Average</th>
+                <th class="header">Minimum</th>
+                <th class="header">Average</th>
+                <th class="header">Maximum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 minute</td>
+                <td class="number">0.42</td>
+                <td class="number">2.96</td>
+                <td class="number">3.63</td>
+              </tr>
+              <tr>
+                <td>5 minutes</td>
+                <td class="number">0.10</td>
+                <td class="number">1.27</td>
+                <td class="number">2.06</td>
+              </tr>
+              <tr>
+                <td>15 minutes</td>
+                <td class="number">0.03</td>
+                <td class="number">0.49</td>
+                <td class="number">0.86</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <hr />
+      <div class="footer">
+        <a href="https://github.com/sh2/dstat2graphs">https://github.com/sh2/dstat2graphs</a><br />
+        (c) 2012-2017, Sadao Hiratsuka.
+      </div>
+    </div>
+    <script src="../../js/jquery-1.12.4.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+  </body>
+</html>
