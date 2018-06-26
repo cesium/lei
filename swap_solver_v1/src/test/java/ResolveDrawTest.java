@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import static org.junit.Assert.assertTrue;
@@ -23,36 +24,19 @@ public class ResolveDrawTest {
     public void teste1() {
 
         List<List<String>> biggestCycles = new ArrayList<>();
-        List<String> results = new ArrayList<>();
-        List<String> l1 = new ArrayList<>();
-        l1.add("TP1");
-        l1.add("TP2");
-        l1.add("TP4");
-        l1.add("TP5");
-        l1.add("TP7");
+        List<String> results ;
+        List<String> l1 = new ArrayList<>(Arrays.asList(new String []{"TP1","TP2","TP4","TP5","TP7"}));
         biggestCycles.add(l1);
 
-        List<String> l2 = new ArrayList<>();
-        l2.add("TP1");
-        l2.add("TP4");
-        l2.add("TP6");
-        l2.add("TP2");
-        l2.add("TP3");
+        List<String> l2 = new ArrayList<>(Arrays.asList(new String []{"TP1","TP4","TP6","TP2","TP3"}));
         biggestCycles.add(l2);
-        List<String> expected = new ArrayList<>();
-        expected.add("a1");
-        expected.add("a7");
-        expected.add("a5");
-        expected.add("a10");
-        expected.add("a11");
+        
+
         DefaultDirectedWeightedGraph<String, ERList> inputGraph = new DefaultDirectedWeightedGraph<>(ERList.class);
-        inputGraph.addVertex("TP1");
-        inputGraph.addVertex("TP2");
-        inputGraph.addVertex("TP3");
-        inputGraph.addVertex("TP4");
-        inputGraph.addVertex("TP5");
-        inputGraph.addVertex("TP6");
-        inputGraph.addVertex("TP7");
+        for(int i=1 ; i<=7 ; i++){
+            inputGraph.addVertex("TP"+i);
+        }
+
         ExchangeRequest er;
 
         er = new ExchangeRequest(1, "TP1", "TP2", "a1");
@@ -104,12 +88,12 @@ public class ResolveDrawTest {
         ERList tp5_tp7 = new ERList();
         tp5_tp7.addExchangeRequest(er);
         inputGraph.addEdge("TP5", "TP7", tp5_tp7);
-        SwapSolver sv= new SwapSolver();
-        results = sv.resolveDraw(biggestCycles, inputGraph);
+        
+        results = SwapSolver.resolveDraw(biggestCycles, inputGraph);
         System.out.println(results);
         Boolean res = true;
         for (String result : results) {
-            if (!expected.contains(result)) {
+            if (!l1.contains(result)) {
                 res = false;
             }
             if (res == false) {
