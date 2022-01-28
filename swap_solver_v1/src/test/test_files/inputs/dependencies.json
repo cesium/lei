@@ -3,79 +3,116 @@
         "id": 1,
         "student": "a1",
         "exchanges": [
-            {
-                "uc_id": "li1",
-                "from_shift_id": "TP1",
-                "to_shifts": ["TP2", "TP3"],
-                "created_at": 1
-            },
-            {
-                "uc_id": "pf",
-                "from_shift_id": "TP1",
-                "to_shifts": ["TP2"],
-                "created_at": 1
-            }
+            [
+                {
+                    "uc_id": "li1",
+                    "from_shift": "TP1",
+                    "to_shift": "TP2",
+                    "created_at": 1
+                },
+                {
+                    "uc_id": "pf",
+                    "from_shift": "TP1",
+                    "to_shift": "TP2",
+                    "created_at": 1
+                }
+            ],
+            [
+                {
+                    "uc_id": "li1",
+                    "from_shift": "TP1",
+                    "to_shift": "TP3",
+                    "created_at": 1
+                },
+                {
+                    "uc_id": "pf",
+                    "from_shift": "TP1",
+                    "to_shift": "TP2",
+                    "created_at": 1
+                }
+            ]
         ]
     },
     {
         "id": 2,
         "student": "a2",
         "exchanges": [
-            {
-                "uc_id": "li1",
-                "from_shift_id": "TP2",
-                "to_shifts": ["TP1"],
-                "created_at": 2
-            },
-            {
-                "uc_id": "pf",
-                "from_shift_id": "TP2",
-                "to_shifts": ["TP3"],
-                "created_at": 2
-            }
-
+            [
+                {
+                    "uc_id": "li1",
+                    "from_shift": "TP2",
+                    "to_shift": "TP1",
+                    "created_at": 2
+                },
+                {
+                    "uc_id": "pf",
+                    "from_shift": "TP2",
+                    "to_shift": "TP3",
+                    "created_at": 2
+                }
+            ]
         ]
     },
     {
         "id": 3,
         "student": "a3",
         "exchanges": [
-            {
-                "uc_id": "pf",
-                "from_shift_id": "TP3",
-                "to_shifts": ["TP1"],
-                "created_at": 3
-            }
+            [
+                {
+                    "uc_id": "pf",
+                    "from_shift": "TP3",
+                    "to_shift": "TP1",
+                    "created_at": 3
+                }
+            ]           
         ]
     },
     {
         "id": 4,
         "student": "a4",
         "exchanges": [
-            {
-                "uc_id": "pf",
-                "from_shift_id": "TP7",
-                "to_shifts": ["TP4"],
-                "created_at": 4
-            }
+            [
+                {
+                    "uc_id": "pf",
+                    "from_shift": "TP7",
+                    "to_shift": "TP4",
+                    "created_at": 4
+                }
+            ]
         ]
     },
     {
         "id": 5,
         "student": "a5",
         "exchanges": [
-            {
-                "uc_id": "pf",
-                "from_shift_id": "TP2",
-                "to_shifts": ["TP4"],
-                "created_at": 5
-            },
-            {
-                "uc_id": "li1",
-                "from_shift_id": "TP1",
-                "to_shifts": ["TP2", "TP4"],
-                "created_at": 5
-            }
+            [
+                {
+                    "uc_id": "pf",
+                    "from_shift": "TP2",
+                    "to_shift": "TP4",
+                    "created_at": 5
+                },
+                {
+                    "uc_id": "li1",
+                    "from_shift": "TP1",
+                    "to_shift": "TP2",
+                    "created_at": 5
+                }
+            ],
+            [
+                {
+                    "uc_id": "pf",
+                    "from_shift": "TP2",
+                    "to_shift": "TP4",
+                    "created_at": 5
+                },
+                {
+                    "uc_id": "li1",
+                    "from_shift": "TP1",
+                    "to_shift": "TP4",
+                    "created_at": 5
+                }
+            ]
         ]
     } 
 ]
