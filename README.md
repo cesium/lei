@@ -18,7 +18,7 @@ Open the project in your favourite IDE. This is a Maven project. If your IDE doe
 
 To run the solver inside a docker, run
 ```
-docker build swap-solver .
+docker build -t swap-solver .
 ```
 to build it, and
 
