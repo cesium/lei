@@ -20,7 +20,7 @@ public class SwapSolver {
         /*int maxThreads = 4;
          int minThreads = 2;
          int timeOutMillis = 30000;*/
-        System.out.println("Ola");
+
         threadPool(8);
         Spark.post("/", (req, res) -> {
             return resolveExchanges(req.body());
