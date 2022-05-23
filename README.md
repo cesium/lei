@@ -19,6 +19,25 @@ Open the project in your favourite IDE. This is a Maven project. If your IDE
 does not support building Maven projects by default, please refer to the
 [official guides][maven-guides].
 
+## 🔨 Development
+
+Start the server on <http://localhost:4567>.
+
+```
+mvn compile exec:java
+```
+
+Format the code accordingly to common guide lines.
+
+```
+mvn formatter:format
+```
+
+Lint your code with checkstyle.
+
+```
+mvn checkstyle:check
+```
 
 ### 🐳 Running inside docker
 

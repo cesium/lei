@@ -53,7 +53,7 @@ public class ERList {
 
         int j = 0;
         boolean res = true;
-        for(ExchangeRequest er : exchangesRequests.exchangeRequests) {
+        for (ExchangeRequest er : exchangesRequests.exchangeRequests) {
             j = 0;
             for (ExchangeRequest erThis : this.exchangeRequests) {
                 if (er.equalsER(erThis)) {
@@ -61,7 +61,7 @@ public class ERList {
                     break;
                 }
             }
-            if (j==0) {
+            if (j == 0) {
                 res = false;
                 break;
             }

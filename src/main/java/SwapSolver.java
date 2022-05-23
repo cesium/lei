@@ -17,9 +17,9 @@ import static spark.Spark.threadPool;
 public class SwapSolver {
 
     public static void main(String[] args) throws JSONException, FileNotFoundException {
-        /*int maxThreads = 4;
-         int minThreads = 2;
-         int timeOutMillis = 30000;*/
+        /*
+         * int maxThreads = 4; int minThreads = 2; int timeOutMillis = 30000;
+         */
 
         threadPool(8);
         Spark.post("/", (req, res) -> {
@@ -29,15 +29,13 @@ public class SwapSolver {
     }
 
     /**
-     * Receives a string representing a json object containing a list of
-     * exchange requests from students and returns a list of identifiers of the
-     * exchange requests to be actually made
+     * Receives a string representing a json object containing a list of exchange requests from students and returns a
+     * list of identifiers of the exchange requests to be actually made
      *
-     * @param jsonString a string with textual representation of a json object
-     * containing a list of exchange requests from students
-     * @return Returns a string with textual representation of a json object
-     * containing a list of identifiers (can be an empty list if there are no
-     * possible exchanges)
+     * @param jsonString a string with textual representation of a json object containing a list of exchange requests
+     *            from students
+     * @return Returns a string with textual representation of a json object containing a list of identifiers (can be an
+     *         empty list if there are no possible exchanges)
      */
     public static String resolveExchanges(String jsonString) {
         JSONObject receivedJSON = new JSONObject(jsonString);
@@ -52,7 +50,7 @@ public class SwapSolver {
         List<List<String>> cycleList = tsc.findSimpleCycles();
 
         if (cycleList.size() > 0) {
-            //Existem ciclos no grafo
+            // Existem ciclos no grafo
             int longest = cycleList.stream().mapToInt(List::size).max().orElse(-1);
             List<List<String>> biggestCycles = cycleList.stream().filter(x -> x.size() == longest).collect(toList());
             System.out.println(biggestCycles);
@@ -82,18 +80,17 @@ public class SwapSolver {
     }
 
     /**
-     * Calculates the timestamp of the exchange request made earlier in the
-     * given cycle but isn't earlier than the given minimumCommonDate
+     * Calculates the timestamp of the exchange request made earlier in the given cycle but isn't earlier than the given
+     * minimumCommonDate
      *
      * @param graph the graph in which the cycle is present
      * @param cycle the cycle where the minimum date is to be found
      * @param minimumCommonDate the lower bound for the return value
-     * @return Returns the timestamp of the exchange request made earlier in the
-     * given cycle but isn't earlier than the given minimumCommonDate
+     * @return Returns the timestamp of the exchange request made earlier in the given cycle but isn't earlier than the
+     *         given minimumCommonDate
      */
-    public static int minimumDateOfCycle(DefaultDirectedWeightedGraph<String, ERList> graph,
-                                         List<String> cycle,
-                                         int minimumCommonDate) {
+    public static int minimumDateOfCycle(DefaultDirectedWeightedGraph<String, ERList> graph, List<String> cycle,
+            int minimumCommonDate) {
         int minimumDateOfCycle = Integer.MAX_VALUE;
         for (int k = 0; k < cycle.size() - 1; ++k) {
             ERList erl = graph.getEdge(cycle.get(k), cycle.get(k + 1));
@@ -102,21 +99,19 @@ public class SwapSolver {
                 minimumDateOfCycle = minimumDateOfEdge;
             }
         }
-        /*     At this point we have the guarantee that minimumDateOfCycle is
-         * different than Integer.MAX_VALUE
-         *     Every edge in a cycle belongs to a different person, therefore
-         * every edge has a different minimumDateOfEdge
-         *     If at this point minimumDateOfCycle were equal to
-         * Integer.MAX_VALUE it would mean that every edge in this cycle would
-         * have a minimunDateOfEdge smaller than minimumCommonDate (which is
-         * impossible since the number of iterations is limited in the "resolveDraw" method)
+        /*
+         * At this point we have the guarantee that minimumDateOfCycle is different than Integer.MAX_VALUE Every edge in
+         * a cycle belongs to a different person, therefore every edge has a different minimumDateOfEdge If at this
+         * point minimumDateOfCycle were equal to Integer.MAX_VALUE it would mean that every edge in this cycle would
+         * have a minimunDateOfEdge smaller than minimumCommonDate (which is impossible since the number of iterations
+         * is limited in the "resolveDraw" method)
          */
         return minimumDateOfCycle;
     }
 
     /**
-     * Converts a List&lt;ExchangeRequest&gt containing exchange requests from
-     * students to a directed graph in which each edge has a ERList associated;
+     * Converts a List&lt;ExchangeRequest&gt containing exchange requests from students to a directed graph in which
+     * each edge has a ERList associated;
      *
      * @param edges list of exchange requests from students
      * @return Returns the constructed directed graph from the exchange requests
@@ -149,10 +144,8 @@ public class SwapSolver {
     /**
      * Converts a JSONArray to a List&lt;ExchangeRequest&gt;
      *
-     * @param courseExchanges the JSONArray containing exchange requests from
-     * students
-     * @return Returns a List of ExchangeRequest objects containing the same
-     * information as the given parameter
+     * @param courseExchanges the JSONArray containing exchange requests from students
+     * @return Returns a List of ExchangeRequest objects containing the same information as the given parameter
      */
     public static List<ExchangeRequest> parseRequestsFromJSON(JSONArray courseExchanges) {
         ArrayList<ExchangeRequest> requests = new ArrayList<>();
@@ -170,17 +163,14 @@ public class SwapSolver {
     }
 
     /**
-     * Resolves the cycle to be solved when there is a draw in deciding which
-     * cycle to solve
+     * Resolves the cycle to be solved when there is a draw in deciding which cycle to solve
      *
-     * @param cycles a List of cycles (each cycle is a List of nodes represented
-     * by a String)
+     * @param cycles a List of cycles (each cycle is a List of nodes represented by a String)
      * @param graph the graph which contains the cycles given
-     * @return Returns the cycle which contains the request(s) made earlier than
-     * the requests in other cycles
+     * @return Returns the cycle which contains the request(s) made earlier than the requests in other cycles
      */
     public static List<String> resolveDraw(List<List<String>> cycles,
-                                           DefaultDirectedWeightedGraph<String, ERList> graph) {
+            DefaultDirectedWeightedGraph<String, ERList> graph) {
         int minDate = 0;
         HashMap<Integer, List<List<String>>> cyclesBySize;
         boolean isResolved;
