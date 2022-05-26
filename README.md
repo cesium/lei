@@ -1,7 +1,9 @@
 [swap-github]: https://github.com/Hackathonners/swap
 [maven-guides]: https://maven.apache.org/guides/getting-started/
 
-# Swap Solver
+<p align="center">
+    <img src="src/main/resources/logo.png" height="120">
+</p>
 
 This is a service used to calculate the maximum possible shift exchanges in the
 [Swap][swap-github] platform.
