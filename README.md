@@ -1,10 +1,27 @@
 [swap-github]: https://github.com/Hackathonners/swap
 [maven-guides]: https://maven.apache.org/guides/getting-started/
+[maven-wrapper]: https://maven.apache.org/wrapper/
 
 # Swap Solver
 
 This is a service used to calculate the maximum possible shift exchanges in the
 [Swap][swap-github] platform.
+
+## 📥 Prerequisites
+
+The following software is required to be installed on your system:
+
+- [Java SDK 18](https://openjdk.java.net/)
+- [Maven 3.8+](https://maven.apache.org/maven-features.html)
+
+The [Maven Wrapper][maven-wrapper] is an easy way to ensure a user of your
+Maven build has everything necessary to run your Maven build. The wrapper
+should work on various operating systems including:
+
+- Linux (numerous versions, tested on Ubuntu and CentOS) [`bin/mvnw`]
+- OSX / macOS [`bin/mvnw`]
+- Windows (various newer versions) [`bin/mvnw.cmd`]
+- Solaris (10 and 11) [`bin/mvnw`]
 
 ## 🔧 Setup
 
@@ -27,10 +44,16 @@ Start the server on <http://localhost:4567>.
 mvn compile exec:java
 ```
 
+Run the project tests.
+
+```
+mvn test
+```
+
 Format the code accordingly to common guide lines.
 
 ```
-mvn formatter:format
+mvn spotless:apply
 ```
 
 Lint your code with checkstyle.
@@ -87,9 +110,6 @@ The return is a JSON as the following:
 
 ```json
 {
-  "solved_exchanges": [
-    "a1",
-    "a2"
-  ]
+  "solved_exchanges": ["a1", "a2"]
 }
 ```

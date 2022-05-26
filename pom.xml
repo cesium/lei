@@ -2,48 +2,49 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelversion>4.0.0</modelversion>
+    <modelVersion>4.0.0</modelVersion>
 
-    <groupid>pt.uminho.di</groupid>
-    <artifactid>swap-solver</artifactid>
+    <groupId>pt.uminho.di</groupId>
+    <artifactId>swap-solver</artifactId>
     <name>swap solver</name>
     <version>1.0.0-alpha</version>
     <packaging>jar</packaging>
 
     <properties>
-        <java.version>17</java.version>
+        <app.class>SwapSolver</app.class>
+        <java.version>18</java.version>
         <project.encoding>utf-8</project.encoding>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupid>org.slf4j</groupid>
-            <artifactid>slf4j-api</artifactid>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
             <version>1.7.36</version>
         </dependency>
         <dependency>
-            <groupid>org.slf4j</groupid>
-            <artifactid>slf4j-simple</artifactid>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
             <version>1.7.36</version>
         </dependency>
         <dependency>
-            <groupid>com.sparkjava</groupid>
-            <artifactid>spark-core</artifactid>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-core</artifactId>
             <version>2.9.3</version>
         </dependency>
         <dependency>
-            <groupid>org.json</groupid>
-            <artifactid>json</artifactid>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
             <version>20211205</version>
         </dependency>
         <dependency>
-            <groupid>org.jgrapht</groupid>
-            <artifactid>jgrapht-core</artifactid>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
             <version>1.5.1</version>
         </dependency>
         <dependency>
-            <groupid>junit</groupid>
-            <artifactid>junit</artifactid>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
@@ -52,16 +53,16 @@
     <build>
         <plugins>
             <plugin>
-                <groupid>org.codehaus.mojo</groupid>
-                <artifactid>exec-maven-plugin</artifactid>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <mainclass>swapsolver</mainclass>
+                    <mainClass>${app.class}</mainClass>
                 </configuration>
             </plugin>
             <plugin>
-                <groupid>org.apache.maven.plugins</groupid>
-                <artifactid>maven-compiler-plugin</artifactid>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
                     <source>${java.version}</source>
@@ -70,21 +71,24 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupid>org.apache.maven.plugins</groupid>
-                <artifactid>maven-checkstyle-plugin</artifactid>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
                     <encoding>${project.encoding}</encoding>
-                    <configlocation>.checkstyle.xml</configlocation>
                 </configuration>
             </plugin>
             <plugin>
-                <groupid>net.revelc.code.formatter</groupid>
-                <artifactid>formatter-maven-plugin</artifactid>
-                <version>2.10.0</version>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.22.5</version>
                 <configuration>
-                    <encoding>${project.encoding}</encoding>
-                    <configfile>.formatter.xml</configfile>
+                    <java>
+                        <toggleOffOn />
+                        <importOrder />
+                        <removeUnusedImports />
+                        <eclipse />
+                    </java>
                 </configuration>
             </plugin>
         </plugins>
