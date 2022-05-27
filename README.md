@@ -2,9 +2,9 @@
 [maven-guides]: https://maven.apache.org/guides/getting-started/
 [maven-wrapper]: https://maven.apache.org/wrapper/
 
-<p align="center">
-    <img src="src/main/resources/logo.png" height="120">
-</p>
+<h1 align="center">
+    <img src="src/main/resources/logo.png" width="760">
+</h1>
 
 This is a service used to calculate the maximum possible shift exchanges in the
 [Swap][swap-github] platform.
