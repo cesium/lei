@@ -1,4 +1,4 @@
-FROM library/maven
+FROM maven:3.8-openjdk-18-slim
 
 WORKDIR /solver
 
