@@ -1,4 +1,4 @@
-name: Package project with Maven
+name: Test and Build
 
 on:
   push:
