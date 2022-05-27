@@ -4,9 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.swapsolver</groupId>
-    <artifactId>SwapSolver</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>pt.uminho.di</groupId>
+    <artifactId>swap-solver</artifactId>
+    <name>swap solver</name>
+    <version>1.0.0-alpha</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <app.class>SwapSolver</app.class>
+        <java.version>18</java.version>
+        <project.encoding>utf-8</project.encoding>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -42,24 +50,47 @@
         </dependency>
     </dependencies>
 
-    <packaging>jar</packaging>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.4.0</version>
+                <version>3.0.0</version>
                 <configuration>
-                    <mainClass>SwapSolver</mainClass>
+                    <mainClass>${app.class}</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.encoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <encoding>${project.encoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.22.5</version>
+                <configuration>
+                    <java>
+                        <toggleOffOn />
+                        <importOrder />
+                        <removeUnusedImports />
+                        <eclipse />
+                    </java>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-    </properties>
-
 </project>
