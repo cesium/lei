@@ -13,6 +13,7 @@
 [![CI Package][ci-package-status]][ci-package-workflow]
 [![CI Docker][ci-docker-status]][ci-docker-workflow]
 
+> ♻️ Maximize shift exchanges between pools of student requests
 
 This is a service used to calculate the maximum possible shift exchanges in the
 [Swap][swap-github] platform.
