@@ -1,10 +1,19 @@
 [swap-github]: https://github.com/Hackathonners/swap
 [maven-guides]: https://maven.apache.org/guides/getting-started/
 [maven-wrapper]: https://maven.apache.org/wrapper/
+[ci-package-status]: https://github.com/cesium/swap-solver/actions/workflows/package.yml/badge.svg
+[ci-package-workflow]: https://github.com/cesium/swap-solver/actions/workflows/package.yml
+[ci-docker-status]: https://github.com/cesium/swap-solver/actions/workflows/docker.yml/badge.svg
+[ci-docker-workflow]: https://github.com/cesium/swap-solver/actions/workflows/docker.yml
 
 <h1 align="center">
     <img src="src/main/resources/logo.png" width="760">
 </h1>
+
+[![CI Package][ci-package-status]][ci-package-workflow]
+[![CI Docker][ci-docker-status]][ci-docker-workflow]
+
+> ♻️ Maximize shift exchanges between pools of student requests
 
 This is a service used to calculate the maximum possible shift exchanges in the
 [Swap][swap-github] platform.

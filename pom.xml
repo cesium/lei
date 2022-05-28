@@ -6,14 +6,17 @@
 
     <groupId>pt.uminho.di</groupId>
     <artifactId>swap-solver</artifactId>
-    <name>swap solver</name>
     <version>1.0.0-alpha</version>
     <packaging>jar</packaging>
 
+    <name>Swap Solver</name>
+    <description>Maximize shift exchanges between pools of student requests</description>
+    <url>https://swap.di.uminho.pt/</url>
+
     <properties>
-        <app.class>SwapSolver</app.class>
+        <main.class>SwapSolver</main.class>
         <java.version>18</java.version>
-        <project.encoding>utf-8</project.encoding>
+        <project.encoding>UTF-8</project.encoding>
     </properties>
 
     <dependencies>
@@ -57,7 +60,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <mainClass>${app.class}</mainClass>
+                    <mainClass>${main.class}</mainClass>
                 </configuration>
             </plugin>
             <plugin>
