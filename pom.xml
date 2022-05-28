@@ -6,7 +6,7 @@
 
     <groupId>pt.uminho.di</groupId>
     <artifactId>swap-solver</artifactId>
-    <name>swap solver</name>
+    <name>Swap Solver</name>
     <version>1.0.0-alpha</version>
     <packaging>jar</packaging>
 
