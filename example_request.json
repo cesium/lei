@@ -1,0 +1,17 @@
+{
+	"requested_exchanges": [
+		{
+			"id": 1,
+			"timestamp": 2,
+			"student": "A12345",
+			"exchanges": [
+				{
+					"id": 2,
+					"course": "Algoritmos e Complexidade",
+					"from_shift": "TP2",
+					"to_shift": "TP1"
+				}
+			]
+		}
+	]	
+}	
