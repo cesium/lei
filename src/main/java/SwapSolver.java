@@ -22,7 +22,7 @@ public class SwapSolver {
 		threadPool(8);
 		Spark.post("/", (req, res) -> LPSolver.solve(req.body()));
 	}
-a
+
 	/**
 	 * Converts a JSONArray to a List&lt;ExchangeRequest&gt;
 	 *
