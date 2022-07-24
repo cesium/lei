@@ -56,6 +56,17 @@ public class ConditionalExchange {
     }
 
     /**
+     * Returns the unique identifier of the exchange
+     * @return the id of the exchange
+     */
+    public int getId() {
+        return this.id;
+    }
+
+    public List<Exchange> getExchanges() {
+        return this.exchanges;
+    }
+    /**
      * Converts the JSON Array of the "simple" exchanges to a list of exchanges
      * @param array the JSON array
      * @return the list of exchanges

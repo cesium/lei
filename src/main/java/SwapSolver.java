@@ -3,10 +3,13 @@ import static spark.Spark.initExceptionHandler;
 import static spark.Spark.threadPool;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.LogManager;
+
 import org.jgrapht.alg.cycle.TarjanSimpleCycles;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.json.JSONArray;
@@ -22,7 +25,11 @@ import com.google.ortools.Loader;
  */
 public class SwapSolver {
 
-	public static void main(String[] args) throws JSONException {
+	/**
+	 * Main application entry point
+	 * @param args program arguments
+	 */
+	public static void main(String[] args) {
 
 		Loader.loadNativeLibraries();
 
@@ -30,23 +37,50 @@ public class SwapSolver {
 		Spark.post("/", (req, res) -> processRequest(req, res));
 	}
 
+
+	/**
+	 * Main request handler
+	 * @param request the incoming request
+	 * @param response the outgoing response object
+	 * @return the response body
+	 */
 	public static String processRequest(Request request, Response response) {
+
 		try {
-			List<ConditionalExchange> exchangeRequests = parseRequest(request.body());
+			List<ExchangeRequest> exchangeRequests = parseRequest(request.body());
 			if(!validateRequest(exchangeRequests)) {
-				response.status(400);
+				response.status(422);
 				return errorToJSON("Set of exchanges is not valid");
 			}
-		} catch(JSONException) {
-			response.status(400);
-			return errorToJSON("Body not a valid JSON object");
-		}
 
-		response.status(200);
-		return "Batata";
+			LPSolver solver = new LPSolver();
+			solver.setup(exchangeRequests);
+
+			int result = solver.solve();
+			return resultToJSON(solver.parseSolution());
+
+		} catch(JSONException e) {
+			response.status(400);
+			return errorToJSON(e.getMessage());
+		} catch(IllegalStateException e) {
+			response.status(422);
+			return errorToJSON(e.getMessage());
+		} catch(IOException e) {
+			response.status(500);
+			return errorToJSON(e.getMessage());
+		}
 	}
 
-	//TODO
+	/**
+	 * Converts the result from the solver to a JSON string
+	 * @param solvedExchanges the list of all solved exchanges
+	 * @return the JSON string to send to the client
+	 */
+	private static String resultToJSON(List<String> solvedExchanges) {
+		JSONObject obj = new JSONObject();
+		obj.put("solved_exchanges", solvedExchanges);
+		return obj.toString();
+	}
 
 	/**
 	 * Determines whether or not a list of exchanges corresponds to a valid request
@@ -56,7 +90,7 @@ public class SwapSolver {
 	 * @param requestedExchanges the list of requested exchanges
 	 * @return whether or not the requested exchanges make up a valid request
 	 */
-	private static boolean validateRequest(List<ConditionalExchange> requestedExchanges) {
+	private static boolean validateRequest(List<ExchangeRequest> requestedExchanges) {
 		return true;
 	}
 
@@ -75,38 +109,15 @@ public class SwapSolver {
 	 * @return the list of requested exchanges
 	 * @throws JSONException if the string is not valid JSON or it is not of the correct format
 	 */
-	private static List<ConditionalExchange> parseRequest(String request) throws JSONException {
-		List<ConditionalExchange> requestedExchanges = new ArrayList<>();
+	private static List<ExchangeRequest> parseRequest(String request) throws JSONException {
+		List<ExchangeRequest> requestedExchanges = new ArrayList<>();
 		JSONObject object = new JSONObject(request);
 		JSONArray array = object.getJSONArray("requested_exchanges");
 
 		for(int i = 0; i < array.length(); i++) {
-			requestedExchanges.add(new ConditionalExchange(array.getJSONObject(i)));
+			requestedExchanges.add(new ExchangeRequest(array.getJSONArray(i)));
 		}
 
 		return requestedExchanges;
 	}
-
-	/**
-	 * Converts a JSONArray to a List&lt;ExchangeRequest&gt;
-	 *
-	 * @param courseExchanges
-	 *            the JSONArray containing exchange requests from students
-	 * @return Returns a List of ExchangeRequest objects containing the same
-	 *         information as the given parameter
-	 */
-	/*public static List<ExchangeRequest> parseRequestsFromJSON(JSONArray courseExchanges) {
-		ArrayList<ExchangeRequest> requests = new ArrayList<>();
-		for (int j = 0; j < courseExchanges.length(); j++) {
-			// iterate over every exchange request of a given course
-			JSONObject exchange = courseExchanges.getJSONObject(j);
-			String fromShift = exchange.get("from_shift_id").toString();
-			String toShift = exchange.get("to_shift_id").toString();
-			String exchangeID = exchange.get("id").toString();
-			Integer requestDate = (Integer) exchange.get("created_at");
-			ExchangeRequest er = new ExchangeRequest(requestDate, fromShift, toShift, exchangeID);
-			requests.add(er);
-		}
-		return requests;
-	}*/
 }
