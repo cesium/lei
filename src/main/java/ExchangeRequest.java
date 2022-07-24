@@ -1,41 +1,44 @@
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * An exchange request.
+ *
+ * An exchange request comprises several conditional exchanges, of which only one can be accepted
+ */
 public class ExchangeRequest {
-	int created_at;
-	String from_shift_id;
-	String to_shift_id;
-	String id;
+    /**
+     * The list of conditional exchanges. Of these, only one can be performed
+     */
+    private List<ConditionalExchange> exchanges;
 
-	public ExchangeRequest(int created_at, String from_shift_id, String to_shift_id, String id) {
-		this.created_at = created_at;
-		this.from_shift_id = from_shift_id;
-		this.to_shift_id = to_shift_id;
-		this.id = id;
-	}
+    /**
+     * Parameterized constructor
+     * @param conditionals the list of conditional exchanges
+     */
+    public ExchangeRequest(List<ConditionalExchange> conditionals) {
+        this.exchanges = conditionals;
+    }
 
-	/* GETTERS */
-	String getFrom_shift_id() {
-		return this.from_shift_id;
-	}
+    /**
+     * Constructor from a JSONArray
+     * @param array the JSONArray
+     */
+    public ExchangeRequest(JSONArray array) {
+        this.exchanges = new ArrayList<>();
 
-	String getTo_shift_id() {
-		return this.to_shift_id;
-	}
+        for(int i = 0; i < array.length(); i++) {
+            this.exchanges.add(new ConditionalExchange(array.getJSONObject(i)));
+        }
+    }
 
-	int getCreated_at() {
-		return this.created_at;
-	}
-
-	String getId() {
-		return this.id;
-	}
-
-	@Override
-	public String toString() {
-		return "{from: " + this.from_shift_id + ", to: " + this.to_shift_id + ", created_at: " + this.created_at
-				+ ", id: " + this.id + "}";
-	}
-
-	public boolean equalsER(ExchangeRequest er) {
-		return ((er.created_at == this.created_at) && (er.from_shift_id.equals(this.from_shift_id))
-				&& (er.to_shift_id.equals(this.to_shift_id)) && (er.id.equals(this.id)));
-	}
+    /**
+     * Gets the exchanges that make up the exchange request
+     * @return the exchanges that make up the request
+     */
+    public List<ConditionalExchange> getExchanges() {
+        return this.exchanges;
+    }
 }
